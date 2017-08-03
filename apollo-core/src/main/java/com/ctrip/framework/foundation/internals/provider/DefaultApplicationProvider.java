@@ -17,6 +17,8 @@ public class DefaultApplicationProvider implements ApplicationProvider {
   private static final Logger logger = LoggerFactory.getLogger(DefaultApplicationProvider.class);
   public static final String APP_PROPERTIES_CLASSPATH = "/META-INF/app.properties";
   private Properties m_appProperties = new Properties();
+  //springboot 应用标识
+  private final String SPRINGBOOT_APPLICATINO_NAME = "spring.application.name";
 
   private String m_appId;
 
@@ -80,6 +82,10 @@ public class DefaultApplicationProvider implements ApplicationProvider {
     return ApplicationProvider.class;
   }
 
+
+  /*
+      初始化appId
+   */
   private void initAppId() {
     // 1. Get app.id from System Property
     m_appId = System.getProperty("app.id");
@@ -88,6 +94,8 @@ public class DefaultApplicationProvider implements ApplicationProvider {
       logger.info("App ID is set to {} by app.id property from System Property", m_appId);
       return;
     }
+
+    // 从springboot的环境中读取 todo
 
     // 2. Try to get app id from app.properties.
     m_appId = m_appProperties.getProperty("app.id");
