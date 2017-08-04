@@ -1,5 +1,6 @@
 package com.ctrip.framework.apollo.configservice;
 
+import com.ctrip.framework.apollo.ConfigServiceApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 

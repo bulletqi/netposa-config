@@ -1,4 +1,4 @@
-package com.ctrip.framework.apollo.configservice;
+package com.ctrip.framework.apollo;
 
 import com.ctrip.framework.apollo.biz.ApolloBizConfig;
 import com.ctrip.framework.apollo.common.ApolloCommonConfig;
