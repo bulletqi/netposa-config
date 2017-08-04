@@ -1,6 +1,6 @@
 eureka:
   instance:
-    hostname: ${hostname:localhost}
+    hostname: localhost
     preferIpAddress: true
   client:
     serviceUrl:

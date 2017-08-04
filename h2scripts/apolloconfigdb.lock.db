@@ -1,0 +1,6 @@
+#FileLock
+#Fri Aug 04 16:29:04 CST 2017
+hostName=dell-PC
+id=15dac5cb7d8c7b6c1efd14c5501f63d14791295244a
+method=file
+server=192.168.61.65\:60535
