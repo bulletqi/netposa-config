@@ -79,6 +79,7 @@ public class AppController {
 
     App createdApp = appService.createAppInLocal(app);
 
+    //基于事件驱动
     publisher.publishEvent(new AppCreationEvent(createdApp));
 
     Set<String> admins = appModel.getAdmins();

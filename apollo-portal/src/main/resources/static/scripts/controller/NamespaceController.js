@@ -6,7 +6,7 @@ namespace_module.controller("LinkNamespaceController",
 
                                  var params = AppUtil.parseParams($location.$$url);
                                  $scope.appId = params.appid;
-                                 $scope.type = 'link';
+                                 $scope.type = 'create';  //默认改为创建namespace
 
                                  $scope.step = 1;
 

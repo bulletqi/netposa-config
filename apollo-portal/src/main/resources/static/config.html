@@ -32,16 +32,16 @@
                  ng-show="!notFoundApp && (viewMode == 1 || (viewMode == 2 && showSideBar))">
 
                 <!--env list-->
-                <section class="panel">
-                    <header class="panel-heading">
-                        环境列表
-                        <span class="pull-right"
-                              data-tooltip="tooltip" data-placement="bottom" title="通过切换环境、集群来管理不同环境、集群的配置">
-                                    <img src="img/question.png" class="i-20"/>
-                            </span>
-                    </header>
-                    <div id="treeview" class="no-radius"></div>
-                </section>
+                <!--<section class="panel">-->
+                    <!--<header class="panel-heading">-->
+                        <!--环境列表-->
+                        <!--<span class="pull-right"-->
+                              <!--data-tooltip="tooltip" data-placement="bottom" title="通过切换环境、集群来管理不同环境、集群的配置">-->
+                                    <!--<img src="img/question.png" class="i-20"/>-->
+                            <!--</span>-->
+                    <!--</header>-->
+                    <!--<div id="treeview" class="no-radius"></div>-->
+                <!--</section>-->
 
 
                 <!--app info-->
@@ -116,16 +116,16 @@
                         </div>
                     </a>
 
-                    <apolloentrance apollo-title="'添加集群'" apollo-img-src="'plus-orange'"
-                                    apollo-href="'cluster.html?#/appid=' + pageContext.appId"
-                                    ng-show="hasCreateClusterPermission"></apolloentrance>
+                    <!--<apolloentrance apollo-title="'添加集群'" apollo-img-src="'plus-orange'"-->
+                                    <!--apollo-href="'cluster.html?#/appid=' + pageContext.appId"-->
+                                    <!--ng-show="hasCreateClusterPermission"></apolloentrance>-->
 
-                    <div class="list-group-item cursor-pointer hover" ng-click="showMasterPermissionTips()"
-                         ng-show="!hasCreateClusterPermission">
-                        <div class="row icon-text icon-plus-orange">
-                            <p class="btn-title">添加集群</p>
-                        </div>
-                    </div>
+                    <!--<div class="list-group-item cursor-pointer hover" ng-click="showMasterPermissionTips()"-->
+                         <!--ng-show="!hasCreateClusterPermission">-->
+                        <!--<div class="row icon-text icon-plus-orange">-->
+                            <!--<p class="btn-title">添加集群</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
                     <apolloentrance apollo-title="'添加Namespace'" apollo-img-src="'plus-orange'"
                                     apollo-href="'namespace.html?#/appid=' + pageContext.appId"

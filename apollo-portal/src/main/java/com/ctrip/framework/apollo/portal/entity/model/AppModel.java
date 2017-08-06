@@ -9,11 +9,11 @@ public class AppModel {
 
   private String appId;
 
-  private String orgId;
+  private String orgId = "netposa";
 
-  private String orgName;
+  private String orgName = "解析系统应用研发部";
 
-  private String ownerName;
+  private String ownerName = "admin";
 
   private Set<String> admins;
 

@@ -38,32 +38,32 @@ function createAppController($scope, $window, toastr, AppService, AppUtil, Organ
     function create() {
         $scope.submitBtnDisabled = true;
 
-        var selectedOrg = $('#organization').select2('data')[0];
-
-        if (!selectedOrg.id) {
-            toastr.warning("请选择部门");
-            return;
-        }
-
-        $scope.app.orgId = selectedOrg.id;
-        $scope.app.orgName = selectedOrg.name;
-
-        // owner
-        var owner = $('.ownerSelector').select2('data')[0];
-        if (!owner) {
-            toastr.warning("请选择应用负责人");
-            return;
-        }
-        $scope.app.ownerName = owner.id;
-
-        //admins
-        $scope.app.admins = [];
-        var admins = $(".adminSelector").select2('data');
-        if (admins) {
-            admins.forEach(function (admin) {
-                $scope.app.admins.push(admin.id);
-            })
-        }
+        // var selectedOrg = $('#organization').select2('data')[0];
+        //
+        // if (!selectedOrg.id) {
+        //     toastr.warning("请选择部门");
+        //     return;
+        // }
+        //
+        // $scope.app.orgId = selectedOrg.id;
+        // $scope.app.orgName = selectedOrg.name;
+        //
+        // // owner
+        // var owner = $('.ownerSelector').select2('data')[0];
+        // if (!owner) {
+        //     toastr.warning("请选择应用负责人");
+        //     return;
+        // }
+        // $scope.app.ownerName = owner.id;
+        //
+        // //admins
+        // $scope.app.admins = [];
+        // var admins = $(".adminSelector").select2('data');
+        // if (admins) {
+        //     admins.forEach(function (admin) {
+        //         $scope.app.admins.push(admin.id);
+        //     })
+        // }
 
         AppService.create($scope.app).then(function (result) {
             toastr.success('创建成功!');

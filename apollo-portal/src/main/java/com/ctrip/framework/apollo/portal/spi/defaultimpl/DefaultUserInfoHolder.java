@@ -16,7 +16,7 @@ public class DefaultUserInfoHolder implements UserInfoHolder {
   @Override
   public UserInfo getUser() {
     UserInfo userInfo = new UserInfo();
-    userInfo.setUserId("apollo");
+    userInfo.setUserId("admin");
     return userInfo;
   }
 }

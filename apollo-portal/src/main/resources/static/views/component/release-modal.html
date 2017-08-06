@@ -6,7 +6,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" ng-show="!toReleaseNamespace.isBranch">发布
-                    <small>(只有发布过的配置才会被客户端获取到，此次发布只会作用于当前环境:{{env}})</small>
+                    <!--<small>(只有发布过的配置才会被客户端获取到，此次发布只会作用于当前环境:{{env}})</small>-->
+                    <small>(只有发布过的配置才会被客户端获取到)</small>
                 </h4>
                 <h4 class="modal-title" ng-show="toReleaseNamespace.isBranch && !toReleaseNamespace.mergeAndPublish">
                     灰度发布

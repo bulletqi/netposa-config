@@ -24,9 +24,9 @@
                 <header class="panel-heading">
                     <div class="row">
                         <div class="col-md-6">新建Namespace
-                        <small><a target="_blank" href="https://github.com/ctripcorp/apollo/wiki/Apollo%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E4%B9%8B%E2%80%9CNamespace%E2%80%9D">
-                            (点击了解更多Namespace相关知识)
-                        </a> </small>
+                        <!--<small><a target="_blank" href="https://github.com/ctripcorp/apollo/wiki/Apollo%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E4%B9%8B%E2%80%9CNamespace%E2%80%9D">-->
+                            <!--(点击了解更多Namespace相关知识)-->
+                        <!--</a> </small>-->
                         </div>
                         <div class="col-md-6 text-right">
                             <button type="button" class="btn btn-info" ng-click="back()">返回到项目首页
@@ -62,11 +62,11 @@
                     </div>
                     <div class="row text-right" style="padding-right: 20px;">
                         <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                            <button type="button" class="btn btn-default" ng-class="{active:type=='link'}"
-                                    ng-click="switchType('link')">关联公共Namespace
-                            </button>
                             <button type="button" class="btn btn-default" ng-class="{active:type=='create'}"
                                     ng-click="switchType('create')">创建Namespace
+                            </button>
+                            <button type="button" class="btn btn-default" ng-class="{active:type=='link'}"
+                                    ng-click="switchType('link')">关联公共Namespace
                             </button>
                         </div>
                     </div>
@@ -80,17 +80,17 @@
                                 <label class="form-control-static" ng-bind="appId"></label>
                             </div>
                         </div>
-                        <div class="form-horizontal" ng-show="type == 'link'">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">
-                                    <apollorequiredfield></apollorequiredfield>
-                                    选择集群</label>
-                                <div class="col-sm-6" valdr-form-group>
-                                    <apolloclusterselector apollo-app-id="appId" apollo-default-all-checked="true"
-                                                           apollo-select="collectSelectedClusters"></apolloclusterselector>
-                                </div>
-                            </div>
-                        </div>
+                        <!--<div class="form-horizontal" ng-show="type == 'link'">-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-3 control-label">-->
+                                    <!--<apollorequiredfield></apollorequiredfield>-->
+                                    <!--选择集群</label>-->
+                                <!--<div class="col-sm-6" valdr-form-group>-->
+                                    <!--<apolloclusterselector apollo-app-id="appId" apollo-default-all-checked="true"-->
+                                                           <!--apollo-select="collectSelectedClusters"></apolloclusterselector>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
                         <div class="form-group" ng-show="type == 'create'">
                             <label class="col-sm-3 control-label">
                                 <apollorequiredfield></apollorequiredfield>

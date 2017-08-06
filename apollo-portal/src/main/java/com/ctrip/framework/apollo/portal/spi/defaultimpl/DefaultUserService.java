@@ -25,7 +25,7 @@ public class DefaultUserService implements UserService {
 
   @Override
   public UserInfo findByUserId(String userId) {
-    if (userId.equals("apollo")) {
+    if (userId.equals("admin")) {
       return assembleDefaultUser();
     }
     return null;
@@ -41,9 +41,9 @@ public class DefaultUserService implements UserService {
 
   private UserInfo assembleDefaultUser() {
     UserInfo defaultUser = new UserInfo();
-    defaultUser.setUserId("apollo");
-    defaultUser.setName("apollo");
-    defaultUser.setEmail("apollo@acme.com");
+    defaultUser.setUserId("admin");
+    defaultUser.setName("admin");
+    defaultUser.setEmail("qilucheng@netposa.com");
 
     return defaultUser;
   }

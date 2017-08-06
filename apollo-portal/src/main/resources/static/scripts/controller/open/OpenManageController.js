@@ -81,7 +81,7 @@ function OpenManageController($scope, toastr, AppUtil, OrganizationService, Cons
         var selectedOrg = $orgWidget.select2('data')[0];
 
         if (!selectedOrg.id) {
-            toastr.warning("请选择部门");
+            toastr.warning("请选择部门11");
             return;
         }
 

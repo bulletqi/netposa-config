@@ -36,40 +36,40 @@
 
             <section class="context" ng-show="hasAssignUserPermission">
                 <!--project admin-->
-                <section class="form-horizontal">
-                    <h5>管理员
-                        <small>
-                            (项目管理员具有以下权限: 1. 创建Namespace 2. 创建集群 3. 管理项目、Namespace权限)
-                        </small>
-                    </h5>
-                    <hr>
+                <!--<section class="form-horizontal">-->
+                    <!--<h5>管理员-->
+                        <!--<small>-->
+                            <!--(项目管理员具有以下权限: 1. 创建Namespace 2. 创建集群 3. 管理项目、Namespace权限)-->
+                        <!--</small>-->
+                    <!--</h5>-->
+                    <!--<hr>-->
 
-                    <div class="col-md-offset-1">
-                        <form class="form-inline" ng-submit="assignMasterRoleToUser()">
-                            <div class="form-group" style="padding-left: 15px">
-                                <apollouserselector apollo-id="userSelectWidgetId"></apollouserselector>
-                            </div>
-                            <button type="submit" class="btn btn-default" style="margin-left: 20px;"
-                                    ng-disabled="submitBtnDisabled">添加
-                            </button>
-                        </form>
-                        <!-- Split button -->
-                        <div class="item-container">
+                    <!--<div class="col-md-offset-1">-->
+                        <!--<form class="form-inline" ng-submit="assignMasterRoleToUser()">-->
+                            <!--<div class="form-group" style="padding-left: 15px">-->
+                                <!--<apollouserselector apollo-id="userSelectWidgetId"></apollouserselector>-->
+                            <!--</div>-->
+                            <!--<button type="submit" class="btn btn-default" style="margin-left: 20px;"-->
+                                    <!--ng-disabled="submitBtnDisabled">添加-->
+                            <!--</button>-->
+                        <!--</form>-->
+                        <!--&lt;!&ndash; Split button &ndash;&gt;-->
+                        <!--<div class="item-container">-->
 
-                            <div class="btn-group item-info" ng-repeat="user in appRoleUsers.masterUsers">
-                                <button type="button" class="btn btn-default" ng-bind="user.userId"></button>
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false"
-                                        ng-click="removeMasterRoleFromUser(user.userId)">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                            </div>
-                        </div>
+                            <!--<div class="btn-group item-info" ng-repeat="user in appRoleUsers.masterUsers">-->
+                                <!--<button type="button" class="btn btn-default" ng-bind="user.userId"></button>-->
+                                <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"-->
+                                        <!--aria-haspopup="true" aria-expanded="false"-->
+                                        <!--ng-click="removeMasterRoleFromUser(user.userId)">-->
+                                    <!--<span class="glyphicon glyphicon-remove"></span>-->
+                                <!--</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
 
-                    </div>
+                    <!--</div>-->
 
 
-                </section>
+                <!--</section>-->
 
                 <!--application info-->
                 <section>

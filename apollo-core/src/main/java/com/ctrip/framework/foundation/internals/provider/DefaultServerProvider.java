@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
+import com.ctrip.framework.apollo.core.enums.Env;
 import com.ctrip.framework.foundation.internals.Utils;
 import com.ctrip.framework.foundation.internals.io.BOMInputStream;
 import com.ctrip.framework.foundation.spi.provider.Provider;
@@ -16,28 +17,37 @@ import org.slf4j.LoggerFactory;
 
 public class DefaultServerProvider implements ServerProvider {
   private static final Logger logger = LoggerFactory.getLogger(DefaultServerProvider.class);
-  private static final String SERVER_PROPERTIES_LINUX = "/opt/settings/server.properties";
-  private static final String SERVER_PROPERTIES_WINDOWS = "C:/opt/settings/server.properties";
+//  private static final String SERVER_PROPERTIES_LINUX = "/opt/settings/server.properties";
+//  private static final String SERVER_PROPERTIES_WINDOWS = "C:/opt/settings/server.properties";
 
   private String m_env;
   private String m_dc;
 
   private Properties m_serverProperties = new Properties();
 
+//  @Override
+//  public void initialize() {
+//    try {
+//      String path = Utils.isOSWindows() ? SERVER_PROPERTIES_WINDOWS : SERVER_PROPERTIES_LINUX;
+//
+//      File file = new File(path);
+//      if (file.exists() && file.canRead()) {
+//        logger.info("Loading {}", file.getAbsolutePath());
+//        FileInputStream fis = new FileInputStream(file);
+//        initialize(fis);
+//        return;
+//      }
+//
+//      logger.warn("{} does not exist or is not readable.", path);
+//      initialize(null);
+//    } catch (Throwable ex) {
+//      logger.error("Initialize DefaultServerProvider failed.", ex);
+//    }
+//  }
+
   @Override
   public void initialize() {
     try {
-      String path = Utils.isOSWindows() ? SERVER_PROPERTIES_WINDOWS : SERVER_PROPERTIES_LINUX;
-
-      File file = new File(path);
-      if (file.exists() && file.canRead()) {
-        logger.info("Loading {}", file.getAbsolutePath());
-        FileInputStream fis = new FileInputStream(file);
-        initialize(fis);
-        return;
-      }
-
-      logger.warn("{} does not exist or is not readable.", path);
       initialize(null);
     } catch (Throwable ex) {
       logger.error("Initialize DefaultServerProvider failed.", ex);
@@ -102,33 +112,36 @@ public class DefaultServerProvider implements ServerProvider {
   }
 
   private void initEnvType() {
-    // 1. Try to get environment from JVM system property
-    m_env = System.getProperty("env");
-    if (!Utils.isBlank(m_env)) {
-      m_env = m_env.trim();
-      logger.info("Environment is set to [{}] by JVM system property 'env'.", m_env);
-      return;
-    }
+    //环境变量默认为DEV
+    m_env = Env.DEV.name();
 
-    // 2. Try to get environment from OS environment variable
-    m_env = System.getenv("ENV");
-    if (!Utils.isBlank(m_env)) {
-      m_env = m_env.trim();
-      logger.info("Environment is set to [{}] by OS env variable 'ENV'.", m_env);
-      return;
-    }
-
-    // 3. Try to get environment from file "server.properties"
-    m_env = m_serverProperties.getProperty("env");
-    if (!Utils.isBlank(m_env)) {
-      m_env = m_env.trim();
-      logger.info("Environment is set to [{}] by property 'env' in server.properties.", m_env);
-      return;
-    }
-
-    // 4. Set environment to null.
-    m_env = null;
-    logger.warn("Environment is set to null. Because it is not available in either (1) JVM system property 'env', (2) OS env variable 'ENV' nor (3) property 'env' from the properties InputStream.");
+//    // 1. Try to get environment from JVM system property
+//    m_env = System.getProperty("env");
+//    if (!Utils.isBlank(m_env)) {
+//      m_env = m_env.trim();
+//      logger.info("Environment is set to [{}] by JVM system property 'env'.", m_env);
+//      return;
+//    }
+//
+//    // 2. Try to get environment from OS environment variable
+//    m_env = System.getenv("ENV");
+//    if (!Utils.isBlank(m_env)) {
+//      m_env = m_env.trim();
+//      logger.info("Environment is set to [{}] by OS env variable 'ENV'.", m_env);
+//      return;
+//    }
+//
+//    // 3. Try to get environment from file "server.properties"
+//    m_env = m_serverProperties.getProperty("env");
+//    if (!Utils.isBlank(m_env)) {
+//      m_env = m_env.trim();
+//      logger.info("Environment is set to [{}] by property 'env' in server.properties.", m_env);
+//      return;
+//    }
+//
+//    // 4. Set environment to null.
+//    m_env = null;
+//    logger.warn("Environment is set to null. Because it is not available in either (1) JVM system property 'env', (2) OS env variable 'ENV' nor (3) property 'env' from the properties InputStream.");
   }
 
   private void initDataCenter() {
