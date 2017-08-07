@@ -6,11 +6,11 @@ package com.ctrip.framework.apollo.core.utils;
 public class NetposaPropertiesUtil {
 
 	public static String getAppId(){
-		return ResourceUtils.loadNetposaConfigFile().getProperty("spring.application.name");
+		return (String) ResourceUtils.loadNetposaConfigFile().get("spring.application.name");
 	}
 
 	public static String getDevMeta(){
-		String localtion = ResourceUtils.loadNetposaConfigFile().getProperty("spring.netposa.center-conf.url");
+		String localtion = (String) ResourceUtils.loadNetposaConfigFile().get("spring.netposa.center-conf.url");
 		return "http://" + localtion;
 	}
 

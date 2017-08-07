@@ -3,15 +3,15 @@ package com.ctrip.framework.apollo.core.utils;
 import com.ctrip.framework.foundation.internals.provider.DefaultApplicationProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.yaml.snakeyaml.Yaml;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.Map;
 import java.util.Properties;
 
 public class ResourceUtils {
@@ -88,26 +88,21 @@ public class ResourceUtils {
 	  1.读取业务的配置文件，一般文件名为applicaiton、bootstrap 后缀为yml、properties
    */
 	private static final String[] NETPOSA_CONFIGFILE = new String[]{"bootstrap.yml", "bootstrap.properties","application.yml", "application.properties"};
-	public static Properties loadNetposaConfigFile() {
-		Properties props = new Properties();
+	public static Map loadNetposaConfigFile() {
+		Map props = Collections.EMPTY_MAP;
+		Yaml yaml = new Yaml();
+		Properties aa = new Properties();
 		InputStream in = null;
 		try {
-			//先从classpath中读取
-			for (String fileName : NETPOSA_CONFIGFILE) {
-				in = DefaultApplicationProvider.class.getResourceAsStream("/" + fileName);
-				if(in != null){
-					break;
-				}
+			//1.从文件里读取
+			in = getPropertiesfromFile();
+			//2.从classpath中读取
+			if (in == null) {
+				in = getPropertiesfromStream();
 			}
-			//从文件里读取
-			for (String searchLocation : DEFAULT_FILE_SEARCH_LOCATIONS) {
-				for (String fileName : NETPOSA_CONFIGFILE) {
-					File candidate = Paths.get(searchLocation, fileName).toFile();
-					if (candidate.exists() && candidate.isFile() && candidate.canRead()) {
-						in = new FileInputStream(candidate);
-						props.load(in);
-					}
-				}
+			if(in != null){
+				props = (Map) yaml.load(in);
+				aa.load(in);
 			}
 		} catch (Exception ex) {
 			logger.error(ex.getMessage(),ex);
@@ -121,6 +116,33 @@ public class ResourceUtils {
 			}
 		}
 		return props;
+	}
+
+	private static InputStream getPropertiesfromStream(){
+		InputStream in = null;
+		for (String fileName : NETPOSA_CONFIGFILE) {
+			in = DefaultApplicationProvider.class.getResourceAsStream("/" + fileName);
+			if(in != null){
+				break;
+			}
+		}
+		return in;
+	}
+
+	private static InputStream getPropertiesfromFile(){
+		for (String searchLocation : DEFAULT_FILE_SEARCH_LOCATIONS) {
+			for (String fileName : NETPOSA_CONFIGFILE) {
+				File candidate = Paths.get(searchLocation, fileName).toFile();
+				if (candidate.exists() && candidate.isFile() && candidate.canRead()) {
+					try {
+						return new FileInputStream(candidate);
+					} catch (FileNotFoundException e) {
+						logger.error("配置文件加载失败: {}", e.getMessage());
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 }

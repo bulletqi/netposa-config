@@ -18,8 +18,6 @@ public class DefaultApplicationProvider implements ApplicationProvider {
   private static final Logger logger = LoggerFactory.getLogger(DefaultApplicationProvider.class);
   public static final String APP_PROPERTIES_CLASSPATH = "/META-INF/app.properties";
   private Properties m_appProperties = new Properties();
-  //springboot 应用标识
-  private final String SPRINGBOOT_APPLICATINO_NAME = "spring.application.name";
 
   private String m_appId;
 
@@ -88,6 +86,7 @@ public class DefaultApplicationProvider implements ApplicationProvider {
       初始化appId
    */
   private void initAppId() {
+
     // 优先从应用的配置文件读取
     m_appId = NetposaPropertiesUtil.getAppId();
     if (!Utils.isBlank(m_appId)) {

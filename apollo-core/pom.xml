@@ -34,6 +34,11 @@
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
 		<!-- end of log -->
+		<!--yaml语言解析器-->
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+		</dependency>
 		<!-- test -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
