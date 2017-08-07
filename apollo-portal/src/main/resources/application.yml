@@ -8,7 +8,7 @@ server:
   port: 8081
   
 logging:
-  file: ./apollo-portal.log
+  file: ./logs/netposa-portal.log
 
 endpoints:
   health:

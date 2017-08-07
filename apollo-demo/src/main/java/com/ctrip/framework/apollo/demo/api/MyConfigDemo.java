@@ -20,7 +20,7 @@ import java.io.InputStreamReader;
 public class MyConfigDemo {
 
   public static void main(String[] args) throws IOException {
-    Config appConfig = ConfigService.getAppConfig();
-    System.out.println(appConfig.getPropertyNames());
+    Config appConfig = ConfigService.getConfig("ymldemo.yml");
+    System.out.println(appConfig.getProperty("content",""));
   }
 }

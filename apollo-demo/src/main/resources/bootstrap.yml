@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: qlctest
+  netposa:
+    center-conf:
+      url: localhost:8080

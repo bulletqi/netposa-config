@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
+import com.ctrip.framework.apollo.core.utils.NetposaPropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -87,6 +88,14 @@ public class DefaultApplicationProvider implements ApplicationProvider {
       初始化appId
    */
   private void initAppId() {
+    // 优先从应用的配置文件读取
+    m_appId = NetposaPropertiesUtil.getAppId();
+    if (!Utils.isBlank(m_appId)) {
+      m_appId = m_appId.trim();
+      logger.info("配置中心读取应用标识 {} ", m_appId);
+      return;
+    }
+
     // 1. Get app.id from System Property
     m_appId = System.getProperty("app.id");
     if (!Utils.isBlank(m_appId)) {
@@ -94,8 +103,6 @@ public class DefaultApplicationProvider implements ApplicationProvider {
       logger.info("App ID is set to {} by app.id property from System Property", m_appId);
       return;
     }
-
-    // 从springboot的环境中读取 todo
 
     // 2. Try to get app id from app.properties.
     m_appId = m_appProperties.getProperty("app.id");

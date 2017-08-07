@@ -105,9 +105,12 @@ namespace_module.controller("LinkNamespaceController",
                                                  $scope.step = 2;
                                                  setInterval(function () {
                                                      $scope.submitBtnDisabled = false;
+                                                     // $window.location.href =
+                                                     //     '/namespace/role.html?#appid=' + $scope.appId
+                                                     //     + "&namespaceName=" + $scope.namespaceName;
+                                                     //修改跳转到config页面
                                                      $window.location.href =
-                                                         '/namespace/role.html?#appid=' + $scope.appId
-                                                         + "&namespaceName=" + $scope.namespaceName;
+                                                         '/config.html?#appid=' + $scope.appId;
                                                  }, 1000);
                                              }, function (result) {
                                                  $scope.submitBtnDisabled = false;

@@ -45,6 +45,7 @@ public class DefaultServerProvider implements ServerProvider {
 //    }
 //  }
 
+//  方法重写不从文件中读取配置，相关的配置信息直接走默认值
   @Override
   public void initialize() {
     try {

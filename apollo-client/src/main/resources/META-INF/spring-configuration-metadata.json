@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "spring.netposa.center-conf.url",
+      "type": "java.lang.String"
+    }
+  ]
+}

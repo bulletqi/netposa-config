@@ -94,6 +94,7 @@ public class ConfigController {
     }
 
     //if namespace does not belong to this appId, should check if there is a public configuration
+    //如果namespace不是这个app所属的 检查是不是一个公共的namespace
     if (!namespaceBelongsToAppId(appId, namespace)) {
       Release publicRelease = this.findPublicConfig(appId, clientIp, clusterName, namespace,
           dataCenter);

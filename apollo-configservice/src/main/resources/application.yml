@@ -11,4 +11,4 @@ server:
   port: 8080
   
 logging:
-  file: ./netposa-configservice.log
+  file: ./logs/netposa-configservice.log

@@ -72,12 +72,12 @@ function itemModalDirective(toastr, $sce, AppUtil, EventManager, ConfigService) 
                                 scope.item.addItemBtnDisabled = false;
                             });
                     } else {
-                        //去掉集群概念，校验注视
-                        // if (selectedClusters.length == 0) {
-                        //     toastr.error("请选择集群");
-                        //     scope.item.addItemBtnDisabled = false;
-                        //     return;
-                        // }
+                        //去掉集群概念，页面上的dom元素隐藏，让数据保存到数据库中
+                        if (selectedClusters.length == 0) {
+                            toastr.error("请选择集群");
+                            scope.item.addItemBtnDisabled = false;
+                            return;
+                        }
 
                         selectedClusters.forEach(function (cluster) {
                             ConfigService.create_item(scope.appId,
