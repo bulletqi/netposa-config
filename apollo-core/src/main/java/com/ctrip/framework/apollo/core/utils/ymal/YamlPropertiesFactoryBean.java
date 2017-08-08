@@ -16,6 +16,7 @@
 
 package com.ctrip.framework.apollo.core.utils.ymal;
 
+import java.io.InputStream;
 import java.util.Map;
 import java.util.Properties;
 
@@ -67,7 +68,12 @@ import java.util.Properties;
  */
 public class YamlPropertiesFactoryBean extends YamlProcessor {
 
-    protected Properties createProperties() {
+    public YamlPropertiesFactoryBean(InputStream in){
+        this.setPropsInput(in);
+    }
+
+
+    public Properties createProperties() {
         final Properties result = new Properties();
         process(new MatchCallback() {
             @Override

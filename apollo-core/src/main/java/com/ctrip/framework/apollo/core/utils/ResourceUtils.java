@@ -1,5 +1,6 @@
 package com.ctrip.framework.apollo.core.utils;
 
+import com.ctrip.framework.apollo.core.utils.ymal.YamlPropertiesFactoryBean;
 import com.ctrip.framework.foundation.internals.provider.DefaultApplicationProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,65 +85,91 @@ public class ResourceUtils {
 		return ClassLoaderUtil.getLoader().getResourceAsStream(configPath);
 	}
 
-  /*
-	  1.读取业务的配置文件，一般文件名为applicaiton、bootstrap 后缀为yml、properties
-   */
-	private static final String[] NETPOSA_CONFIGFILE = new String[]{"bootstrap.yml", "bootstrap.properties","application.yml", "application.properties"};
-	public static Map loadNetposaConfigFile() {
-		Map props = Collections.EMPTY_MAP;
-		Yaml yaml = new Yaml();
-		Properties aa = new Properties();
-		InputStream in = null;
-		try {
-			//1.从文件里读取
-			in = getPropertiesfromFile();
-			//2.从classpath中读取
-			if (in == null) {
-				in = getPropertiesfromStream();
-			}
-			if(in != null){
-				props = (Map) yaml.load(in);
-				aa.load(in);
-			}
-		} catch (Exception ex) {
-			logger.error(ex.getMessage(),ex);
-		}finally {
-			if (in != null) {
-				try {
+	/*
+		1.读取业务的配置文件，一般文件名为applicaiton、bootstrap 后缀为yml、properties
+	 */
+	private static final String[] NETPOSA_CONFIGFILE
+			= new String[]{"bootstrap.yml", "bootstrap.properties", "application.yml", "application.properties"};
+
+	public static Properties loadNetposaConfigFile() {
+		Properties props = new Properties();
+		for (String configPath : NETPOSA_CONFIGFILE) {
+			InputStream in = loadConfigFileFromDefaultSearchLocations(configPath);
+			logger.debug("Reading config from resource {}", configPath);
+			try {
+				if (in == null) {
+					// load outside resource under current user path
+					Path path = new File(System.getProperty("user.dir") +File.separator + configPath).toPath();
+					if (Files.isReadable(path)) {
+						in = new FileInputStream(path.toFile());
+						logger.debug("Reading config from file {} ", path);
+					}
+				}
+				if (in != null) {
+					if(configPath.contains("yml")){
+						props.putAll(new YamlPropertiesFactoryBean(in).createProperties());
+					}else{
+						props.load(in);
+					}
 					in.close();
-				} catch (IOException ex) {
-					logger.warn("Close config failed: {}", ex.getMessage());
+				}
+			} catch (Exception ex) {
+				logger.warn("Reading config failed: {}", ex.getMessage());
+			} finally {
+				if (in != null) {
+					try {
+						in.close();
+					} catch (IOException ex) {
+						logger.warn("Close config failed: {}", ex.getMessage());
+					}
 				}
 			}
 		}
 		return props;
 	}
 
-	private static InputStream getPropertiesfromStream(){
-		InputStream in = null;
-		for (String fileName : NETPOSA_CONFIGFILE) {
-			in = DefaultApplicationProvider.class.getResourceAsStream("/" + fileName);
-			if(in != null){
-				break;
-			}
-		}
-		return in;
-	}
-
-	private static InputStream getPropertiesfromFile(){
-		for (String searchLocation : DEFAULT_FILE_SEARCH_LOCATIONS) {
-			for (String fileName : NETPOSA_CONFIGFILE) {
-				File candidate = Paths.get(searchLocation, fileName).toFile();
-				if (candidate.exists() && candidate.isFile() && candidate.canRead()) {
-					try {
-						return new FileInputStream(candidate);
-					} catch (FileNotFoundException e) {
-						logger.error("配置文件加载失败: {}", e.getMessage());
-					}
-				}
-			}
-		}
-		return null;
-	}
-
+//	private static void getPropertiesfromStream(Properties props) {
+//		InputStream in = null;
+//		for (String fileName : NETPOSA_CONFIGFILE) {
+//			try {
+//				in = DefaultApplicationProvider.class.getResourceAsStream("/" + fileName);
+//				if (in != null) {
+//					props.putAll(new YamlPropertiesFactoryBean(in).createProperties());
+//				}
+//			} finally {
+//				if (in != null) {
+//					try {
+//						in.close();
+//					} catch (IOException ex) {
+//						logger.warn("Close Stream failed: {}", ex.getMessage());
+//					}
+//				}
+//			}
+//		}
+//	}
+//
+//	private static void getPropertiesfromFile(Properties props) {
+//		InputStream in = null;
+//		for (String searchLocation : DEFAULT_FILE_SEARCH_LOCATIONS) {
+//			for (String fileName : NETPOSA_CONFIGFILE) {
+//				File candidate = Paths.get(searchLocation, fileName).toFile();
+//				if (candidate.exists() && candidate.isFile() && candidate.canRead()) {
+//					try {
+//						in = new FileInputStream(candidate);
+//						props.putAll(new YamlPropertiesFactoryBean(in).createProperties());
+//					} catch (FileNotFoundException e) {
+//						logger.error("配置文件加载失败: {}", e.getMessage());
+//					} finally {
+//						if (in != null) {
+//							try {
+//								in.close();
+//							} catch (IOException ex) {
+//								logger.warn("Close Stream failed: {}", ex.getMessage());
+//							}
+//						}
+//					}
+//				}
+//			}
+//		}
+//	}
 }

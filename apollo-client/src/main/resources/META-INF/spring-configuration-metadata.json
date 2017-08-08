@@ -3,6 +3,10 @@
     {
       "name": "spring.netposa.center-conf.url",
       "type": "java.lang.String"
+    },
+    {
+      "name": "spring.netposa.center-conf.enable",
+      "type": "java.lang.Boolean"
     }
   ]
 }

@@ -4,3 +4,4 @@ spring:
   netposa:
     center-conf:
       url: localhost:8080
+      enable: true

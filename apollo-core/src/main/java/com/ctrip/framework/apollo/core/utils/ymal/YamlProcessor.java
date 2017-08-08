@@ -54,6 +54,10 @@ public abstract class YamlProcessor {
     private InputStream propsInput;
 
 
+    public void setPropsInput(InputStream propsInput) {
+        this.propsInput = propsInput;
+    }
+
     /**
      * A map of document matchers allowing callers to selectively use only
      * some of the documents in a YAML resource. In YAML documents are

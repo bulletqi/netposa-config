@@ -21,18 +21,29 @@ public class DefaultApplicationProvider implements ApplicationProvider {
 
   private String m_appId;
 
+//  @Override
+//  public void initialize() {
+//    try {
+//      InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(APP_PROPERTIES_CLASSPATH);
+//      if (in == null) {
+//        in = DefaultApplicationProvider.class.getResourceAsStream(APP_PROPERTIES_CLASSPATH);
+//      }
+//
+//      if (in == null) {
+//        logger.warn("{} not found from classpath!", APP_PROPERTIES_CLASSPATH);
+//      }
+//      initialize(in);
+//    } catch (Throwable ex) {
+//      logger.error("Initialize DefaultApplicationProvider failed.", ex);
+//    }
+//  }
+
+
+  //不从clssspath读取app.properties
   @Override
   public void initialize() {
     try {
-      InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(APP_PROPERTIES_CLASSPATH);
-      if (in == null) {
-        in = DefaultApplicationProvider.class.getResourceAsStream(APP_PROPERTIES_CLASSPATH);
-      }
-
-      if (in == null) {
-        logger.warn("{} not found from classpath!", APP_PROPERTIES_CLASSPATH);
-      }
-      initialize(in);
+      initialize(null);
     } catch (Throwable ex) {
       logger.error("Initialize DefaultApplicationProvider failed.", ex);
     }

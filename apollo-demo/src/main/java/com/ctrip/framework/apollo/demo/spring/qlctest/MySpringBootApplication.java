@@ -1,10 +1,8 @@
-package com.ctrip.framework.apollo.demo.spring;
+package com.ctrip.framework.apollo.demo.spring.qlctest;
 
-import com.ctrip.framework.apollo.demo.spring.config.SampleRedisConfig;
 import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.annotation.Bean;
 
 import java.util.Scanner;
 
