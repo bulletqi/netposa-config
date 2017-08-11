@@ -1,12 +1,12 @@
 setting_module.controller('SettingController',
                           ['$scope', '$location', 'toastr',
                            'AppService', 'AppUtil', 'PermissionService',
-                           'OrganizationService',
+                           'OrganizationService',"$window",
                            SettingController]);
 
 function SettingController($scope, $location, toastr,
                            AppService, AppUtil, PermissionService,
-                           OrganizationService) {
+                           OrganizationService,$window) {
 
     var params = AppUtil.parseParams($location.$$url);
     var $orgWidget = $('#organization');
@@ -29,6 +29,9 @@ function SettingController($scope, $location, toastr,
     $scope.updateAppInfo = updateAppInfo;
 
     init();
+
+    //先调一下，让编辑按钮出来
+    toggleEditStatus();
 
     function init() {
         initOrganization();
@@ -159,29 +162,37 @@ function SettingController($scope, $location, toastr,
         $scope.submitBtnDisabled = true;
         var app = $scope.viewApp;
 
-        var selectedOrg = $orgWidget.select2('data')[0];
-
-        if (!selectedOrg.id) {
-            toastr.warning("请选择部门");
-            return;
-        }
-
-        app.orgId = selectedOrg.id;
-        app.orgName = selectedOrg.name;
+        // var selectedOrg = $orgWidget.select2('data')[0];
+        //
+        // if (!selectedOrg.id) {
+        //     toastr.warning("请选择部门");
+        //     return;
+        // }
+        //
+        // app.orgId = selectedOrg.id;
+        // app.orgName = selectedOrg.name;
 
         // owner
-        var owner = $('.ownerSelector').select2('data')[0];
-        if (!owner) {
-            toastr.warning("请选择应用负责人");
-            return;
-        }
-        app.ownerName = owner.id;
+        // var owner = $('.ownerSelector').select2('data')[0];
+        // if (!owner) {
+        //     toastr.warning("请选择应用负责人");
+        //     return;
+        // }
+        // app.ownerName = owner.id;
 
         AppService.update(app).then(function (app) {
             toastr.success("修改成功");
-            initApplication();
-            $scope.display.app.edit = false;
-            $scope.submitBtnDisabled = false;
+            // initApplication();
+            // $scope.display.app.edit = false;
+            // $scope.submitBtnDisabled = false;
+
+            //保存成功以后，直接跳转到配置页面
+            setInterval(function () {
+                $scope.display.app.edit = false;
+                $scope.submitBtnDisabled = false;
+                $window.location.href = '/config.html?#appid=' + app.appId;
+            }, 1000);
+
         }, function (result) {
             AppUtil.showErrorMsg(result);
             $scope.submitBtnDisabled = false;

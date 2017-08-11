@@ -16,34 +16,27 @@ import com.ctrip.framework.foundation.spi.provider.Provider;
 
 public class DefaultApplicationProvider implements ApplicationProvider {
   private static final Logger logger = LoggerFactory.getLogger(DefaultApplicationProvider.class);
-  public static final String APP_PROPERTIES_CLASSPATH = "/META-INF/app.properties";
+//  public static final String APP_PROPERTIES_CLASSPATH = "/META-INF/app.properties";
+
+  //文件更换成
+  public static final String APP_PROPERTIES_CLASSPATH = "/META-INF/netposa-centerconf.properties";
   private Properties m_appProperties = new Properties();
 
   private String m_appId;
 
-//  @Override
-//  public void initialize() {
-//    try {
-//      InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(APP_PROPERTIES_CLASSPATH);
-//      if (in == null) {
-//        in = DefaultApplicationProvider.class.getResourceAsStream(APP_PROPERTIES_CLASSPATH);
-//      }
-//
-//      if (in == null) {
-//        logger.warn("{} not found from classpath!", APP_PROPERTIES_CLASSPATH);
-//      }
-//      initialize(in);
-//    } catch (Throwable ex) {
-//      logger.error("Initialize DefaultApplicationProvider failed.", ex);
-//    }
-//  }
 
-
-  //不从clssspath读取app.properties
   @Override
   public void initialize() {
     try {
-      initialize(null);
+      InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(APP_PROPERTIES_CLASSPATH);
+      if (in == null) {
+        in = DefaultApplicationProvider.class.getResourceAsStream(APP_PROPERTIES_CLASSPATH);
+      }
+
+//      if (in == null) {
+//        logger.warn("{} not found from classpath!", APP_PROPERTIES_CLASSPATH);
+//      }
+      initialize(in);
     } catch (Throwable ex) {
       logger.error("Initialize DefaultApplicationProvider failed.", ex);
     }

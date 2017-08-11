@@ -24,27 +24,39 @@ public class MetaDomainConsts {
 
 	public static final String DEFAULT_META_URL = "http://config.local";
 
-	static {
-		Properties prop = new Properties();
-		prop = ResourceUtils.readConfigFile("apollo-env.properties", prop);
-		Properties env = System.getProperties();
-		domains.put(Env.LOCAL,
-				env.getProperty("local_meta", prop.getProperty("local.meta", DEFAULT_META_URL)));
-		domains.put(Env.DEV,
-				env.getProperty("dev_meta", prop.getProperty("dev.meta", DEFAULT_META_URL)));
-		domains.put(Env.FAT,
-				env.getProperty("fat_meta", prop.getProperty("fat.meta", DEFAULT_META_URL)));
-		domains.put(Env.UAT,
-				env.getProperty("uat_meta", prop.getProperty("uat.meta", DEFAULT_META_URL)));
-		domains.put(Env.LPT,
-				env.getProperty("lpt_meta", prop.getProperty("lpt.meta", DEFAULT_META_URL)));
-		domains.put(Env.PRO,
-				env.getProperty("pro_meta", prop.getProperty("pro.meta", DEFAULT_META_URL)));
-	}
+//	static {
+//		Properties prop = new Properties();
+//		prop = ResourceUtils.readConfigFile("apollo-env.properties", prop);
+//		Properties env = System.getProperties();
+//		domains.put(Env.LOCAL,
+//				env.getProperty("local_meta", prop.getProperty("local.meta", DEFAULT_META_URL)));
+//		domains.put(Env.DEV,
+//				env.getProperty("dev_meta", prop.getProperty("dev.meta", DEFAULT_META_URL)));
+//		domains.put(Env.FAT,
+//				env.getProperty("fat_meta", prop.getProperty("fat.meta", DEFAULT_META_URL)));
+//		domains.put(Env.UAT,
+//				env.getProperty("uat_meta", prop.getProperty("uat.meta", DEFAULT_META_URL)));
+//		domains.put(Env.LPT,
+//				env.getProperty("lpt_meta", prop.getProperty("lpt.meta", DEFAULT_META_URL)));
+//		domains.put(Env.PRO,
+//				env.getProperty("pro_meta", prop.getProperty("pro.meta", DEFAULT_META_URL)));
+//	}
 
 //	public static String getDomain(Env env) {
 //		return String.valueOf(domains.get(env));
 //	}
+
+	/*
+		1.从新的配置文件上读取信息
+		2.默认dev环境
+	 */
+	static {
+		Properties prop = new Properties();
+		prop = ResourceUtils.readConfigFile("netposa-centerconf.properties", prop);
+		Properties env = System.getProperties();
+		domains.put(Env.DEV,
+				env.getProperty("dev_meta", prop.getProperty("server.url", DEFAULT_META_URL)));
+	}
 
 	//metaService的地址
 	public static String getDomain(Env env) {

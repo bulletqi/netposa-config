@@ -71,10 +71,10 @@ namespace_module.controller("LinkNamespaceController",
                                  };
                                  $scope.createNamespace = function () {
                                      if ($scope.type == 'link') {
-                                         if (selectedClusters.length == 0) {
-                                             toastr.warning("请选择集群");
-                                             return;
-                                         }
+                                         // if (selectedClusters.length == 0) {
+                                         //     toastr.warning("请选择集群");
+                                         //     return;
+                                         // }
 
                                          if ($scope.namespaceType == 1) {
                                              var selectedNamespaceName = $('#namespaces').select2('data')[0].id;
@@ -87,15 +87,25 @@ namespace_module.controller("LinkNamespaceController",
                                          }
 
                                          var namespaceCreationModels = [];
-                                         selectedClusters.forEach(function (cluster) {
-                                             namespaceCreationModels.push({
-                                                                              env: cluster.env,
-                                                                              namespace: {
-                                                                                  appId: $scope.appId,
-                                                                                  clusterName: cluster.clusterName,
-                                                                                  namespaceName: $scope.namespaceName
-                                                                              }
-                                                                          });
+                                         // selectedClusters.forEach(function (cluster) {
+                                         //     namespaceCreationModels.push({
+                                         //                                      env: cluster.env,
+                                         //                                      namespace: {
+                                         //                                          appId: $scope.appId,
+                                         //                                          clusterName: cluster.clusterName,
+                                         //                                          namespaceName: $scope.namespaceName
+                                         //                                      }
+                                         //                                  });
+                                         // });
+
+                                         //相关信息写死
+                                         namespaceCreationModels.push({
+                                             env: "dev",
+                                             namespace: {
+                                                 appId: $scope.appId,
+                                                 clusterName: "default",
+                                                 namespaceName: $scope.namespaceName
+                                             }
                                          });
 
                                          $scope.submitBtnDisabled = true;
@@ -133,9 +143,12 @@ namespace_module.controller("LinkNamespaceController",
                                                  $scope.step = 2;
                                                  setTimeout(function () {
                                                      $scope.submitBtnDisabled = false;
+                                                     // $window.location.href =
+                                                     //     "/namespace/role.html?#/appid=" + $scope.appId
+                                                     //     + "&namespaceName=" + result.name;
+
                                                      $window.location.href =
-                                                         "/namespace/role.html?#/appid=" + $scope.appId
-                                                         + "&namespaceName=" + result.name;
+                                                         '/config.html?#appid=' + $scope.appId;
                                                  }, 1000);
                                              }, function (result) {
                                                  $scope.submitBtnDisabled = false;

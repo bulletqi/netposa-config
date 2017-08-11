@@ -39,15 +39,15 @@ public class ApolloApplication {
       logger.info(configContext.getId() + " isActive: " + configContext.isActive());
     }
 
-    /**
-     * AdminService
-     */
-    if (commonContext.getEnvironment().containsProperty("adminservice")) {
-      ConfigurableApplicationContext adminContext =
-          new SpringApplicationBuilder(AdminServiceApplication.class).parent(commonContext)
-              .sources(RefreshScope.class).run(args);
-      logger.info(adminContext.getId() + " isActive: " + adminContext.isActive());
-    }
+//    /**
+//     * AdminService
+//     */
+//    if (commonContext.getEnvironment().containsProperty("adminservice")) {
+//      ConfigurableApplicationContext adminContext =
+//          new SpringApplicationBuilder(AdminServiceApplication.class).parent(commonContext)
+//              .sources(RefreshScope.class).run(args);
+//      logger.info(adminContext.getId() + " isActive: " + adminContext.isActive());
+//    }
 
     /**
      * Portal

@@ -1,11 +1,13 @@
 spring:
   profiles:
-    active: ${apollo_profile}
+    active: netposa
+  application:
+    name: netposa-centerconf
 
 logging:
-  level:
-    org.springframework.cloud: 'DEBUG'
-  file: /opt/logs/100003171/apollo-assembly.log
+  #level:
+    #org.springframework.cloud: 'DEBUG'
+  file: ./netposa-centerconf.log
 
 
 

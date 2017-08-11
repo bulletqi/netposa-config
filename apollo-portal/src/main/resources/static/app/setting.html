@@ -87,7 +87,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" ng-show="false">
                             <label class="col-sm-2 control-label">
                                 <apollorequiredfield></apollorequiredfield>
                                 部门</label>
@@ -105,10 +105,10 @@
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" name="appName" ng-model="viewApp.name"
                                        ng-disabled="!display.app.edit">
-                                <small>(建议格式 xx-yy-zz 例:apollo-server)</small>
+                                <small>(建议格式 xx-yy-zz 例:xxxx-server)</small>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" ng-show="false">
                             <label class="col-sm-2 control-label">
                                 <apollorequiredfield></apollorequiredfield>
                                 项目负责人</label>
@@ -120,16 +120,16 @@
 
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-9">
-                                <button type="button" class="btn btn-primary"
-                                        ng-show="!display.app.edit"
-                                        ng-click="toggleEditStatus()">
-                                    修改项目信息
-                                </button>
-                                <button type="button" class="btn btn-warning"
-                                        ng-show="display.app.edit"
-                                        ng-click="toggleEditStatus()">
-                                    取消修改
-                                </button>
+                                <!--<button type="button" class="btn btn-primary"-->
+                                        <!--ng-show="!display.app.edit"-->
+                                        <!--ng-click="toggleEditStatus()">-->
+                                    <!--修改项目信息-->
+                                <!--</button>-->
+                                <!--<button type="button" class="btn btn-warning"-->
+                                        <!--ng-show="display.app.edit"-->
+                                        <!--ng-click="toggleEditStatus()">-->
+                                    <!--取消修改-->
+                                <!--</button>-->
                                 <button type="submit" class="btn btn-primary"
                                         ng-show="display.app.edit"
                                         ng-disabled="appForm.$invalid || submitBtnDisabled">

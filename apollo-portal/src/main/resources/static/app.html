@@ -24,20 +24,20 @@
                 <header class="panel-heading">
                     创建项目
                 </header>
-
+                <!--取消创建时页面的多余信息-->
                 <form class="form-horizontal panel-body" name="appForm" ng-controller="CreateAppController"
                       valdr-type="App"
                       ng-submit="create()">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">
-                            <apollorequiredfield></apollorequiredfield>
-                            部门</label>
-                        <div class="col-sm-3">
-                            <select id="organization">
-                                <option></option>
-                            </select>
-                        </div>
-                    </div>
+                    <!--<div class="form-group">-->
+                        <!--<label class="col-sm-3 control-label">-->
+                            <!--<apollorequiredfield></apollorequiredfield>-->
+                            <!--部门</label>-->
+                        <!--<div class="col-sm-3">-->
+                            <!--<select id="organization">-->
+                                <!--<option></option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+                    <!--</div>-->
                     <div class="form-group" valdr-form-group>
                         <label class="col-sm-3 control-label">
                             <apollorequiredfield></apollorequiredfield>
@@ -56,29 +56,29 @@
                             <!--<small>(建议格式 xx-yy-zz 例:apollo-server)</small>-->
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">
-                            <apollorequiredfield></apollorequiredfield>
-                            应用负责人</label>
-                        <div class="col-sm-6 J_ownerSelectorPanel">
-                            <apollouserselector apollo-id="'ownerSelector'"></apollouserselector>
-                        </div>
-                    </div>
+                    <!--<div class="form-group">-->
+                        <!--<label class="col-sm-3 control-label">-->
+                            <!--<apollorequiredfield></apollorequiredfield>-->
+                            <!--应用负责人</label>-->
+                        <!--<div class="col-sm-6 J_ownerSelectorPanel">-->
+                            <!--<apollouserselector apollo-id="'ownerSelector'"></apollouserselector>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">项目管理员<br>
+                    <!--<div class="form-group">-->
+                        <!--<label class="col-sm-3 control-label">项目管理员<br>-->
 
-                        </label>
-                        <div class="col-sm-9 J_adminSelectorPanel">
+                        <!--</label>-->
+                        <!--<div class="col-sm-9 J_adminSelectorPanel">-->
 
-                            <apollomultipleuserselector apollo-id="'adminSelector'"></apollomultipleuserselector>
-                            <br>
-                            <small>(应用负责人默认具有项目管理员权限，</small>
-                            <br>
-                            <small>项目管理员可以创建Namespace和集群、分配用户权限)</small>
+                            <!--<apollomultipleuserselector apollo-id="'adminSelector'"></apollomultipleuserselector>-->
+                            <!--<br>-->
+                            <!--<small>(应用负责人默认具有项目管理员权限，</small>-->
+                            <!--<br>-->
+                            <!--<small>项目管理员可以创建Namespace和集群、分配用户权限)</small>-->
 
-                        </div>
-                    </div>
+                        <!--</div>-->
+                    <!--</div>-->
 
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-9">
