@@ -19,10 +19,10 @@
 			<groupId>com.ctrip.framework.apollo</groupId>
 			<artifactId>apollo-configservice</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.ctrip.framework.apollo</groupId>
-			<artifactId>apollo-adminservice</artifactId>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>com.ctrip.framework.apollo</groupId>-->
+			<!--<artifactId>apollo-adminservice</artifactId>-->
+		<!--</dependency>-->
 		<dependency>
 			<groupId>com.ctrip.framework.apollo</groupId>
 			<artifactId>apollo-portal</artifactId>
@@ -30,7 +30,6 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>

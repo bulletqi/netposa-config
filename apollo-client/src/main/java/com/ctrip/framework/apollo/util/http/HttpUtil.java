@@ -115,7 +115,8 @@ public class HttpUtil {
       }
 
     } catch (Throwable ex) {
-      throw new ApolloConfigException("Could not complete get operation", ex);
+//      throw new ApolloConfigException("Could not complete get operation", ex);
+      throw new ApolloConfigException("读取配置中心失败", ex);
     } finally {
       if (isr != null) {
         try {

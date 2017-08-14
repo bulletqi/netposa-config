@@ -1,6 +1,5 @@
 package com.ctrip.framework.apollo.assembly;
 
-import com.ctrip.framework.apollo.adminservice.AdminServiceApplication;
 import com.ctrip.framework.apollo.ConfigServiceApplication;
 import com.ctrip.framework.apollo.portal.PortalApplication;
 
@@ -39,15 +38,15 @@ public class LocalApolloApplication {
       logger.info(configContext.getId() + " isActive: " + configContext.isActive());
     }
 
-    /**
-     * AdminService
-     */
-    if (commonContext.getEnvironment().containsProperty("adminservice")) {
-      ConfigurableApplicationContext adminContext =
-          new SpringApplicationBuilder(AdminServiceApplication.class).parent(commonContext)
-              .sources(RefreshScope.class).run(args);
-      logger.info(adminContext.getId() + " isActive: " + adminContext.isActive());
-    }
+//    /**
+//     * AdminService
+//     */
+//    if (commonContext.getEnvironment().containsProperty("adminservice")) {
+//      ConfigurableApplicationContext adminContext =
+//          new SpringApplicationBuilder(AdminServiceApplication.class).parent(commonContext)
+//              .sources(RefreshScope.class).run(args);
+//      logger.info(adminContext.getId() + " isActive: " + adminContext.isActive());
+//    }
 
     /**
      * Portal

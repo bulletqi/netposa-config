@@ -1,6 +1,6 @@
 spring:
   application:
-    name: qlctest
+    name: sysconfig-service
   netposa:
     center-conf:
       url: localhost:8080

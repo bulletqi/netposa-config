@@ -1,6 +1,5 @@
 package com.ctrip.framework.apollo.assembly;
 
-import com.ctrip.framework.apollo.adminservice.AdminServiceApplication;
 import com.ctrip.framework.apollo.ConfigServiceApplication;
 import com.ctrip.framework.apollo.portal.PortalApplication;
 
@@ -21,43 +20,47 @@ public class ApolloApplication {
   private static final Logger logger = LoggerFactory.getLogger(ApolloApplication.class);
 
   public static void main(String[] args) throws Exception {
-    /**
-     * Common
+
+    /*
+      Common
      */
     ConfigurableApplicationContext commonContext =
         new SpringApplicationBuilder(ApolloApplication.class).web(false).run(args);
     commonContext.addApplicationListener(new ApplicationPidFileWriter());
-    logger.info(commonContext.getId() + " isActive: " + commonContext.isActive());
+    logger.info(commonContext.getId() + " #### isActive: " + commonContext.isActive());
 
-    /**
-     * ConfigService
+    /*
+      ConfigService
      */
-    if (commonContext.getEnvironment().containsProperty("configservice")) {
+//    if (commonContext.getEnvironment().containsProperty("configservice")) {
+//      ConfigurableApplicationContext configContext =
+//          new SpringApplicationBuilder(ConfigServiceApplication.class).parent(commonContext)
+//              .sources(RefreshScope.class).run(args);
+//      logger.info(configContext.getId() + " #### isActive: " + configContext.isActive());
+//    }
+
+    //启动configservice
       ConfigurableApplicationContext configContext =
           new SpringApplicationBuilder(ConfigServiceApplication.class).parent(commonContext)
               .sources(RefreshScope.class).run(args);
-      logger.info(configContext.getId() + " isActive: " + configContext.isActive());
-    }
+      logger.info(configContext.getId() + " #### isActive: " + configContext.isActive());
 
-//    /**
-//     * AdminService
-//     */
-//    if (commonContext.getEnvironment().containsProperty("adminservice")) {
-//      ConfigurableApplicationContext adminContext =
-//          new SpringApplicationBuilder(AdminServiceApplication.class).parent(commonContext)
+    /*
+      Portal
+     */
+//    if (commonContext.getEnvironment().containsProperty("portal")) {
+//      ConfigurableApplicationContext portalContext =
+//          new SpringApplicationBuilder(PortalApplication.class).parent(commonContext)
 //              .sources(RefreshScope.class).run(args);
-//      logger.info(adminContext.getId() + " isActive: " + adminContext.isActive());
+//      logger.info(portalContext.getId() + " #### isActive: " + portalContext.isActive());
 //    }
 
-    /**
-     * Portal
-     */
-    if (commonContext.getEnvironment().containsProperty("portal")) {
-      ConfigurableApplicationContext portalContext =
+    //启动portalservice
+    ConfigurableApplicationContext portalContext =
           new SpringApplicationBuilder(PortalApplication.class).parent(commonContext)
               .sources(RefreshScope.class).run(args);
-      logger.info(portalContext.getId() + " isActive: " + portalContext.isActive());
-    }
+      logger.info(portalContext.getId() + " #### isActive: " + portalContext.isActive());
+
   }
 
 }

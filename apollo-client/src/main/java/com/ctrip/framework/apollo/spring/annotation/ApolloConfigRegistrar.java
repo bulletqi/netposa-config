@@ -27,7 +27,7 @@ public class ApolloConfigRegistrar implements ImportBeanDefinitionRegistrar {
 	@Override
 	public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
 		Boolean isEnable = NetposaPropertiesUtil.isEnableCenterConf();
-		if (isEnable != null && !isEnable) {
+		if (!isEnable) {
 			return; //不启用配置中心
 		}
 		AnnotationAttributes attributes = AnnotationAttributes.fromMap(importingClassMetadata
@@ -40,7 +40,7 @@ public class ApolloConfigRegistrar implements ImportBeanDefinitionRegistrar {
 			try {
 				namespaceList = NamespaceUtil.getAllNamespace();
 			} catch (Exception e) {
-				logger.error("加载配置中心的namespace失败，读取本地配置。{}", e.getMessage());
+				logger.error("配置中心加载namespace失败，读取本地配置 {}", e.getMessage());
 				return ;
 			}
 		} else {

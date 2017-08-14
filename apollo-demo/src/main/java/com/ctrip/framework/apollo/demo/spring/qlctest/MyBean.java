@@ -9,7 +9,7 @@ import javax.annotation.PostConstruct;
 @Component
 public class MyBean {
 
-	@Value(value="asdsada")
+//	@Value(value="${spring.redis.host}")
 	public   String name;
 
 	@PostConstruct

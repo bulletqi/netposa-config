@@ -15,8 +15,8 @@ import java.util.Scanner;
 @EnableApolloConfig
 public class MySpringBootApplication {
 
-  @Autowired
-  private MyBean bean;
+//  @Autowired
+//  private MyBean bean;
 
   public static void main(String[] args) {
     new SpringApplicationBuilder(MySpringBootApplication.class).run(args);
