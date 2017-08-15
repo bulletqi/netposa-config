@@ -29,38 +29,17 @@ public class ApolloApplication {
     commonContext.addApplicationListener(new ApplicationPidFileWriter());
     logger.info(commonContext.getId() + " #### isActive: " + commonContext.isActive());
 
-    /*
-      ConfigService
-     */
-//    if (commonContext.getEnvironment().containsProperty("configservice")) {
-//      ConfigurableApplicationContext configContext =
-//          new SpringApplicationBuilder(ConfigServiceApplication.class).parent(commonContext)
-//              .sources(RefreshScope.class).run(args);
-//      logger.info(configContext.getId() + " #### isActive: " + configContext.isActive());
-//    }
-
     //启动configservice
       ConfigurableApplicationContext configContext =
           new SpringApplicationBuilder(ConfigServiceApplication.class).parent(commonContext)
               .sources(RefreshScope.class).run(args);
       logger.info(configContext.getId() + " #### isActive: " + configContext.isActive());
 
-    /*
-      Portal
-     */
-//    if (commonContext.getEnvironment().containsProperty("portal")) {
-//      ConfigurableApplicationContext portalContext =
-//          new SpringApplicationBuilder(PortalApplication.class).parent(commonContext)
-//              .sources(RefreshScope.class).run(args);
-//      logger.info(portalContext.getId() + " #### isActive: " + portalContext.isActive());
-//    }
-
     //启动portalservice
     ConfigurableApplicationContext portalContext =
           new SpringApplicationBuilder(PortalApplication.class).parent(commonContext)
               .sources(RefreshScope.class).run(args);
       logger.info(portalContext.getId() + " #### isActive: " + portalContext.isActive());
-
   }
 
 }

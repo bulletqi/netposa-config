@@ -7,7 +7,7 @@ spring:
 logging:
   #level:
     #org.springframework.cloud: 'DEBUG'
-  file: ./netposa-centerconf.log
+  file: ./logs/centerconf/assembly.log
 
 
 
