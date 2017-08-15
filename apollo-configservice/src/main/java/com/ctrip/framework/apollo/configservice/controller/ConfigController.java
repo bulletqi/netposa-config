@@ -1,5 +1,10 @@
 package com.ctrip.framework.apollo.configservice.controller;
 
+import com.ctrip.framework.apollo.biz.entity.Namespace;
+import com.ctrip.framework.apollo.biz.service.BizDBPropertySource;
+import com.ctrip.framework.apollo.biz.service.NamespaceService;
+import com.ctrip.framework.apollo.core.dto.ConfigDTO;
+import com.ctrip.framework.apollo.core.dto.NetposaConfigDTO;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
@@ -20,6 +25,8 @@ import com.ctrip.framework.apollo.core.ConfigConsts;
 import com.ctrip.framework.apollo.core.dto.ApolloConfig;
 import com.ctrip.framework.apollo.tracer.Tracer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +49,8 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("/configs")
 public class ConfigController {
+  private static final Logger logger = LoggerFactory.getLogger(ConfigController.class);
+
   private static final Splitter X_FORWARDED_FOR_SPLITTER = Splitter.on(",").omitEmptyStrings()
       .trimResults();
   @Autowired
@@ -54,6 +63,9 @@ public class ConfigController {
   private InstanceConfigAuditUtil instanceConfigAuditUtil;
   @Autowired
   private GrayReleaseRulesHolder grayReleaseRulesHolder;
+
+  @Autowired
+  private NamespaceService namespaceService;
 
   private static final Gson gson = new Gson();
   private static final Type configurationTypeReference =
@@ -134,6 +146,53 @@ public class ConfigController {
         originalNamespace, dataCenter));
     return apolloConfig;
   }
+
+
+  /*
+    第三方获取所用配置接口
+   */
+  @RequestMapping(value = "/{appId}", method = RequestMethod.GET)
+  public NetposaConfigDTO queryConfig(@PathVariable String appId,
+                                      HttpServletRequest request,
+                                      HttpServletResponse response) throws IOException {
+
+    List<Namespace> namespaceList = namespaceService.findNamespaces(appId,  ConfigConsts.CLUSTER_NAME_DEFAULT);
+    List<ConfigDTO> data = Lists.newLinkedList(); //配置集合
+    for(Namespace namespace : namespaceList ){
+      String namespaceName = namespace.getNamespaceName();
+      List<Release> releases = Lists.newLinkedList();
+      if (!ConfigConsts.NO_APPID_PLACEHOLDER.equalsIgnoreCase(appId)) {
+        Release currentAppRelease = loadConfig(appId, null, appId, ConfigConsts.CLUSTER_NAME_DEFAULT, namespaceName,
+                null);
+        if (currentAppRelease != null) {
+          releases.add(currentAppRelease);
+        }
+      }
+
+      if (!namespaceBelongsToAppId(appId, namespaceName)) {
+        Release publicRelease = this.findPublicConfig(appId, null,  ConfigConsts.CLUSTER_NAME_DEFAULT, namespaceName,
+                null);
+        if (!Objects.isNull(publicRelease)) {
+          releases.add(publicRelease);
+        }
+      }
+
+      if (releases.isEmpty()) {
+         logger.warn(String.format("应用:%s , %s的namespace未发布过,不获取配置项", appId,namespaceName));
+         continue;
+      }
+      auditReleases(appId, ConfigConsts.CLUSTER_NAME_DEFAULT, null, null, releases);
+
+      String mergedReleaseKey = FluentIterable.from(releases).transform(
+              input -> input.getReleaseKey()).join(STRING_JOINER);
+
+      data.add(new ConfigDTO(namespaceName,mergeReleaseConfigurations(releases),mergedReleaseKey));
+
+    }
+
+    return new NetposaConfigDTO(appId,data);
+  }
+
 
   private boolean namespaceBelongsToAppId(String appId, String namespaceName) {
     //Every app has an 'application' namespace

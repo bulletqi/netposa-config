@@ -35,8 +35,7 @@ public class DiscoveryService {
   }
 
   public List<InstanceInfo> getAdminServiceInstances() {
-//    Application application = eurekaClient.getApplication(ServiceNameConsts.APOLLO_ADMINSERVICE);
-    Application application = eurekaClient.getApplication(ServiceNameConsts.APOLLO_CONFIGSERVICE);
+    Application application = eurekaClient.getApplication(ServiceNameConsts.APOLLO_ADMINSERVICE);
     if (application == null) {
       Tracer.logEvent("Apollo.EurekaDiscovery.NotFound", ServiceNameConsts.APOLLO_ADMINSERVICE);
     }

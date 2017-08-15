@@ -1,6 +1,6 @@
 spring:
   application:
-    name: apollo-portal
+    name: portal
   profiles:
     active: netposa
 
@@ -8,7 +8,7 @@ server:
   port: 8081
   
 logging:
-  file: ./logs/netposa-portal.log
+  file: ./logs/centerconf/netposa-portal.log
 
 endpoints:
   health:
@@ -18,6 +18,6 @@ management:
     enabled: false
   health:
     status:
-      order: DOWN, OUT_OF_SERVICE, UNKNOWN, UP 
+      order: DOWN, OUT_OF_SERVICE, UP, UNKNOWN
 
 

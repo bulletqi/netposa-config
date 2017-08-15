@@ -1,16 +1,14 @@
-eureka:
-  instance:
-    hostname: localhost
-    preferIpAddress: true
-  server:
-    peerEurekaNodesUpdateIntervalMs: 60000
-    enableSelfPreservation: false
-  client:
-    serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
-    healthcheck:
-      enabled: true
-    eurekaServiceUrlPollIntervalSeconds: 60
+spring:
+  application:
+    name: configservice
+  profiles:
+    active: netposa
+
+server:
+  port: 8080
+
+logging:
+  file: ./logs/centerconf/netposa-configservice.log
 
 endpoints:
   health:
@@ -21,4 +19,4 @@ management:
     enabled: false
   health:
     status:
-      order: DOWN, OUT_OF_SERVICE, UNKNOWN, UP
+      order: DOWN, OUT_OF_SERVICE, UP, UNKNOWN
