@@ -88,7 +88,8 @@ function itemModalDirective(toastr, $sce, AppUtil, EventManager, ConfigService) 
                                 function (result) {
                                     scope.item.addItemBtnDisabled = false;
                                     AppUtil.hideModal('#itemModal');
-                                    toastr.success(cluster.env + " , " + scope.item.key, "添加成功,如需生效请发布");
+                                    // toastr.success(cluster.env + " , " + scope.item.key, "添加成功,如需生效请发布");
+                                    toastr.success(scope.item.key, "添加成功,如需生效请发布");
                                     if (cluster.env == scope.env &&
                                         cluster.name == scope.cluster) {
 

@@ -4,8 +4,13 @@ import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.embedded.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -15,16 +20,27 @@ import java.util.Scanner;
 @EnableApolloConfig
 public class MySpringBootApplication {
 
-//  @Autowired
-//  private MyBean bean;
+	//	@Value(value = "${spring.redis}")
+	public String name;
 
-  public static void main(String[] args) {
-    new SpringApplicationBuilder(MySpringBootApplication.class).run(args);
-    onKeyExit();
-  }
 
-  private static void onKeyExit() {
-    System.out.println("Press Enter to exit...");
-    new Scanner(System.in).nextLine();
-  }
+	@Autowired
+	private RedisProperties redisProperties;
+
+	public static void main(String[] args) {
+		new SpringApplicationBuilder(MySpringBootApplication.class).run(args);
+		onKeyExit();
+	}
+
+	private static void onKeyExit() {
+		System.out.println("Press Enter to exit...");
+		new Scanner(System.in).nextLine();
+	}
+
+
+	@Bean
+	public MyBean PVMFilterRegistration() {
+		System.out.println(redisProperties.getHost());
+		return null;
+	}
 }

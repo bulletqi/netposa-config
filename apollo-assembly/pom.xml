@@ -8,30 +8,19 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>apollo-assembly</artifactId>
-	<name>Apollo Assembly</name>
-	<properties>
-		<github.path>${project.artifactId}</github.path>
-	</properties>
+	<artifactId>npwonder-centerconf-server</artifactId>
+
 	<dependencies>
-		<!-- apollo -->
 		<dependency>
 			<groupId>com.ctrip.framework.apollo</groupId>
 			<artifactId>apollo-configservice</artifactId>
 		</dependency>
-		<!--<dependency>-->
-			<!--<groupId>com.ctrip.framework.apollo</groupId>-->
-			<!--<artifactId>apollo-adminservice</artifactId>-->
-		<!--</dependency>-->
 		<dependency>
 			<groupId>com.ctrip.framework.apollo</groupId>
 			<artifactId>apollo-portal</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-		</dependency>
 	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -40,6 +29,24 @@
 				<configuration>
 					<executable>true</executable>
 				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<finalName>${project.artifactId}-${project.version}</finalName>
+							<appendAssemblyId>false</appendAssemblyId>
+							<descriptors>
+								<descriptor>src/assembly/assembly-descriptor.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

@@ -40,7 +40,7 @@ public class ApolloConfigRegistrar implements ImportBeanDefinitionRegistrar {
 			try {
 				namespaceList = NamespaceUtil.getAllNamespace();
 			} catch (Exception e) {
-				logger.error("配置中心加载namespace失败，读取本地配置 {}", e.getMessage());
+				logger.error("配置中心加载namespace失败，读取本地配置", e);
 				return ;
 			}
 		} else {

@@ -5,3 +5,5 @@ spring:
     center-conf:
       url: localhost:8080
       enable: true
+  redis:
+    host: 111.111.111.111

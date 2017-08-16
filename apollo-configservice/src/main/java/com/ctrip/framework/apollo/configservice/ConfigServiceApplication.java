@@ -1,6 +1,8 @@
-package com.ctrip.framework.apollo;
+package com.ctrip.framework.apollo.configservice;
 
+import com.ctrip.framework.apollo.adminservice.AdminServiceConfig;
 import com.ctrip.framework.apollo.biz.ApolloBizConfig;
+import com.ctrip.framework.apollo.biz.service.AdminService;
 import com.ctrip.framework.apollo.common.ApolloCommonConfig;
 import com.ctrip.framework.apollo.metaservice.ApolloMetaServiceConfig;
 
@@ -28,16 +30,18 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 //@PropertySource(value = {"classpath:configservice.properties"})
 @ComponentScan(basePackageClasses = {ApolloCommonConfig.class,
-    ApolloBizConfig.class,
-    ConfigServiceApplication.class,
-    ApolloMetaServiceConfig.class})
+		ApolloBizConfig.class,
+		ConfigServiceApplication.class,
+		ApolloMetaServiceConfig.class,
+		AdminServiceConfig.class})
 public class ConfigServiceApplication {
 
-  public static void main(String[] args) throws Exception {
-    ConfigurableApplicationContext context =
-        new SpringApplicationBuilder(ConfigServiceApplication.class).run(args);
-    context.addApplicationListener(new ApplicationPidFileWriter());
-    context.addApplicationListener(new EmbeddedServerPortFileWriter());
-  }
+	public static void main(String[] args) throws Exception {
+		ConfigurableApplicationContext context =
+				new SpringApplicationBuilder(ConfigServiceApplication.class).profiles("config").run(args);
+//		context.addApplicationListener(new ApplicationPidFileWriter());
+//		context.addApplicationListener(new EmbeddedServerPortFileWriter());
+		
+	}
 
 }

@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.system.ApplicationPidFileWriter;
 import org.springframework.boot.actuate.system.EmbeddedServerPortFileWriter;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.context.scope.refresh.RefreshScope;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,13 +19,16 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableAutoConfiguration
 @EnableTransactionManagement
-@ComponentScan(basePackageClasses = {ApolloCommonConfig.class,
-    PortalApplication.class, PortalOpenApiConfig.class})
+@ComponentScan(basePackageClasses = {
+		ApolloCommonConfig.class,
+		PortalApplication.class,
+		PortalOpenApiConfig.class})
 public class PortalApplication {
 
-  public static void main(String[] args) throws Exception {
-    ConfigurableApplicationContext context = SpringApplication.run(PortalApplication.class, args);
-    context.addApplicationListener(new ApplicationPidFileWriter());
-    context.addApplicationListener(new EmbeddedServerPortFileWriter());
-  }
+	public static void main(String[] args) throws Exception {
+		ConfigurableApplicationContext context =
+				new SpringApplicationBuilder(PortalApplication.class).profiles("portal").run(args);
+//		context.addApplicationListener(new ApplicationPidFileWriter());
+//		context.addApplicationListener(new EmbeddedServerPortFileWriter());
+	}
 }

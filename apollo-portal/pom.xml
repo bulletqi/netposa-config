@@ -18,41 +18,40 @@
 			<groupId>com.ctrip.framework.apollo</groupId>
 			<artifactId>apollo-common</artifactId>
 		</dependency>
-		<!--<dependency>-->
-			<!--<groupId>com.h2database</groupId>-->
-			<!--<artifactId>h2</artifactId>-->
-			<!--<scope>test</scope>-->
-		<!--</dependency>-->
 	</dependencies>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<executable>true</executable>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-						<configuration>
-							<finalName>${project.artifactId}-${project.version}-${package.environment}</finalName>
-							<appendAssemblyId>false</appendAssemblyId>
-							<descriptors>
-								<descriptor>src/assembly/assembly-descriptor.xml</descriptor>
-							</descriptors>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+
+
+	<!--<build>-->
+		<!--<plugins>-->
+			<!--<plugin>-->
+				<!--<groupId>org.springframework.boot</groupId>-->
+				<!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+				<!--&lt;!&ndash;<configuration>&ndash;&gt;-->
+					<!--&lt;!&ndash;<executable>true</executable>&ndash;&gt;-->
+				<!--&lt;!&ndash;</configuration>&ndash;&gt;-->
+			<!--</plugin>-->
+			<!--<plugin>-->
+				<!--<artifactId>maven-assembly-plugin</artifactId>-->
+				<!--<executions>-->
+					<!--<execution>-->
+						<!--<phase>package</phase>-->
+						<!--<goals>-->
+							<!--<goal>single</goal>-->
+						<!--</goals>-->
+						<!--<configuration>-->
+							<!--<finalName>${project.artifactId}-${project.version}</finalName>-->
+							<!--<appendAssemblyId>false</appendAssemblyId>-->
+							<!--<descriptors>-->
+								<!--<descriptor>src/assembly/assembly-descriptor.xml</descriptor>-->
+							<!--</descriptors>-->
+						<!--</configuration>-->
+					<!--</execution>-->
+				<!--</executions>-->
+			<!--</plugin>-->
+		<!--</plugins>-->
+	<!--</build>-->
+
+
 	<!--<profiles>-->
 		<!--<profile>-->
 			<!--<id>ctrip</id>-->
