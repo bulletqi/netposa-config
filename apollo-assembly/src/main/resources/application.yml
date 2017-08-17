@@ -1,7 +1,3 @@
-spring:
-  application:
-    name: netposa-centerconf
-
 logging:
   file: ./logs/centerconf/assembly.log
 

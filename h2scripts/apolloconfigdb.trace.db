@@ -1205,3 +1205,6 @@ org.h2.message.DbException: Wrong user name or password [28000-191]
 Caused by: org.h2.jdbc.JdbcSQLException: Wrong user name or password [28000-191]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
 	... 102 more
+2017-08-17 14:19:03 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Table "SERVER_CONFIG" not found; SQL statement:
+select serverconf0_.id as id1_15_, serverconf0_.data_change_created_by as data_cha2_15_, serverconf0_.data_change_created_time as data_cha3_15_, serverconf0_.data_change_last_modified_by as data_cha4_15_, serverconf0_.data_change_last_time as data_cha5_15_, serverconf0_.is_deleted as is_delet6_15_, serverconf0_.cluster as cluster7_15_, serverconf0_.comment as comment8_15_, serverconf0_.key as key9_15_, serverconf0_.value as value10_15_ from server_config serverconf0_ where ( serverconf0_.isDeleted = 0) [42102-191]

@@ -25,3 +25,6 @@ target
 
 # git
 *.orig
+
+#log file 
+logs/
