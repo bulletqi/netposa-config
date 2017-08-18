@@ -1,5 +1,5 @@
 logging:
-  file: ./logs/centerconf/assembly.log
+  file: ./logs/assembly.log
 
 
 

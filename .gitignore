@@ -28,3 +28,6 @@ target
 
 #log file 
 logs/
+
+#output folder 
+output/

@@ -22,6 +22,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>npwonder-centerconf</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -39,8 +40,9 @@
 							<goal>single</goal>
 						</goals>
 						<configuration>
-							<finalName>${project.artifactId}-${project.version}</finalName>
+							<finalName>npwonder-centerconf</finalName>
 							<appendAssemblyId>false</appendAssemblyId>
+							<outputDirectory>../output/</outputDirectory>
 							<descriptors>
 								<descriptor>src/assembly/assembly-descriptor.xml</descriptor>
 							</descriptors>

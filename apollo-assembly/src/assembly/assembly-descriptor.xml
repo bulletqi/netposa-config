@@ -6,7 +6,7 @@
 	<formats>
 		<format>zip</format>
 	</formats>
-	<includeBaseDirectory>false</includeBaseDirectory>
+	<includeBaseDirectory>true</includeBaseDirectory>
 	<fileSets>
 		<fileSet>
 			<directory>src/bin</directory>
@@ -17,7 +17,7 @@
 			<lineEnding>unix</lineEnding>
 		</fileSet>
 		<fileSet>
-			<directory>${JAVA_HOME}/jre</directory>
+			<directory>../jre</directory>
 			<includes>
 				<include>**/*</include>
 			</includes>
@@ -34,7 +34,7 @@
 			<directory>target</directory>
 			<outputDirectory>/</outputDirectory>
 			<includes>
-				<include>${project.artifactId}-${project.version}.jar</include>
+				<include>npwonder-centerconf.jar</include>
 			</includes>
 		</fileSet>
 	</fileSets>
