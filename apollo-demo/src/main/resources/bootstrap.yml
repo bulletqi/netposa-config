@@ -3,7 +3,7 @@ spring:
     name: sysconfig-service
   netposa:
     center-conf:
-      url: localhost:8080
+      url: localhost:20002
       enable: true
   redis:
     host: 111.111.111.111

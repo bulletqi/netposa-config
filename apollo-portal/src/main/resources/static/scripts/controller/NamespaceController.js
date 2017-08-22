@@ -98,9 +98,9 @@ namespace_module.controller("LinkNamespaceController",
                                          //                                  });
                                          // });
 
-                                         //相关信息写死
+                                         //关联公共的Namespace时，信息写死
                                          namespaceCreationModels.push({
-                                             env: "dev",
+                                             env: "DEV",
                                              namespace: {
                                                  appId: $scope.appId,
                                                  clusterName: "default",

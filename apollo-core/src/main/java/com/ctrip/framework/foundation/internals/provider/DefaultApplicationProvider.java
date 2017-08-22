@@ -19,7 +19,7 @@ public class DefaultApplicationProvider implements ApplicationProvider {
 //  public static final String APP_PROPERTIES_CLASSPATH = "/META-INF/app.properties";
 
   //文件更换成
-  public static final String APP_PROPERTIES_CLASSPATH = "/META-INF/netposa-centerconf.properties";
+  public static final String APP_PROPERTIES_CLASSPATH = "/netposa-centerconf.properties";
   private Properties m_appProperties = new Properties();
 
   private String m_appId;

@@ -9,8 +9,9 @@ $(document).ready(function () {
                              background: '#404040',
                              spacebarenabled: false,
                              cursorborder: '',
-                             zindex: '1000'
-                         });
+                             zindex: '1000',
+                             autohidemode: false
+    });
 
     // bootstrap tooltip & textarea scroll
     setInterval(function () {
