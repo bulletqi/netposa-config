@@ -9,6 +9,8 @@ import com.ctrip.framework.apollo.util.http.HttpRequest;
 import com.ctrip.framework.apollo.util.http.HttpResponse;
 import com.ctrip.framework.apollo.util.http.HttpUtil;
 import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import java.util.List;
  * 获取所有发布namesacpe
  */
 public class NamespaceUtil {
+	private static final Gson gson = new Gson();
 
 	public static List<String> getAllNamespace() {
 		List<String> namespaces = new ArrayList<>();
@@ -41,16 +44,15 @@ public class NamespaceUtil {
 			}
 		}
 		return namespaces;
-
 	}
 
-	//是不是已经发布的namespace
+	//当前namespaces是否已经包含配置项,返回200说明namespace已经发布且configurations返回字段存在配置
 	private static boolean isPublish(String appId ,String namespaces){
 		HttpUtil m_httpUtil = ApolloInjector.getInstance(HttpUtil.class);
-		String url = NetposaPropertiesUtil.getDevMeta() + "/apps/" + appId +
-				"/clusters/"+ ConfigConsts.CLUSTER_NAME_DEFAULT + "/namespaces/"+namespaces+"/releases/latest";
+		String url = NetposaPropertiesUtil.getDevMeta() + "/configs/" + appId + "/" +ConfigConsts.CLUSTER_NAME_DEFAULT + "/"+ namespaces;
 		HttpRequest request = new HttpRequest(url);
 		HttpResponse response = m_httpUtil.doGet(request,Object.class);
-		return (response.getStatusCode() == 200 && response.getBody() != null);
+		return (response.getStatusCode() == 200 &&
+				!gson.toJsonTree(response.getBody()).getAsJsonObject().get("configurations").isJsonNull());
 	}
 }
