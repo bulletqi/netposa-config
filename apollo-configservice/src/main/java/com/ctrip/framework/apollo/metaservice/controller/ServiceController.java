@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/services")
 public class ServiceController {
 
-  @Autowired
-  private DiscoveryService discoveryService;
+//  @Autowired
+//  private DiscoveryService discoveryService;
 
 //
 //  @RequestMapping("/meta")

@@ -12,15 +12,15 @@ import javax.annotation.PostConstruct;
 @Component
 public class MyBean {
 
-	@Autowired
-	private RedisProperties redisProperties;
+//	@Autowired
+//	private RedisProperties redisProperties;
 
-	@Value(value = "${spring.redis.host}")
+	@Value(value = "${spring.datasource.driver-class-name}")
 	private String name;
 
 	@PostConstruct
 	public void init(){
-		System.out.println(redisProperties.getHost());
+//		System.out.println(redisProperties.getHost());
 		System.out.println(name);
 	}
 

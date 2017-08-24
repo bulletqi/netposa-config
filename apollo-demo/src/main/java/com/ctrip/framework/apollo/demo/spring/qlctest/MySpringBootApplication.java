@@ -17,15 +17,15 @@ import java.util.Scanner;
  * @author Jason Song
  */
 @SpringBootApplication
-@EnableApolloConfig(value = "netposa.base'")
+@EnableApolloConfig
 public class MySpringBootApplication {
 
 //	@Value(value = "${spring.redis.port}")
 //	public String name;
 
 
-	@Autowired
-	private RedisProperties redisProperties;
+//	@Autowired
+//	private RedisProperties redisProperties;
 
 	public static void main(String[] args) {
 		new SpringApplicationBuilder(MySpringBootApplication.class).run(args);

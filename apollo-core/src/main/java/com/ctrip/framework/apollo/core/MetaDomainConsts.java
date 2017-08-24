@@ -62,7 +62,6 @@ public class MetaDomainConsts {
 	public static String getDomain(Env env) {
 		String devMeta = NetposaPropertiesUtil.getDevMeta();
 		devMeta = (devMeta == null ? String.valueOf(domains.get(env)) : devMeta);
-//		logger.info("配置中心服务地址 {} ", devMeta);
 		return devMeta;
 	}
 
