@@ -7,6 +7,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicReference;
 
+import com.ctrip.framework.apollo.core.MetaDomainConsts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,44 +92,55 @@ public class ConfigServiceLocator {
         m_configUtil.getRefreshIntervalTimeUnit());
   }
 
+//  private synchronized void updateConfigServices() {
+//    String url = assembleMetaServiceUrl();
+//
+//    HttpRequest request = new HttpRequest(url);
+//    int maxRetries = 2;
+//    Throwable exception = null;
+//
+//    for (int i = 0; i < maxRetries; i++) {
+//      Transaction transaction = Tracer.newTransaction("Apollo.MetaService", "getConfigService");
+//      transaction.addData("Url", url);
+//      try {
+//        HttpResponse<List<ServiceDTO>> response = m_httpUtil.doGet(request, m_responseType);
+//        transaction.setStatus(Transaction.SUCCESS);
+//        List<ServiceDTO> services = response.getBody();
+//        if (services == null || services.isEmpty()) {
+//          logConfigServiceToCat("Empty response!");
+//          continue;
+//        }
+//        m_configServices.set(services);
+//        logConfigServicesToCat(services);
+//        return;
+//      } catch (Throwable ex) {
+//        Tracer.logEvent("ApolloConfigException", ExceptionUtil.getDetailMessage(ex));
+//        transaction.setStatus(ex);
+//        exception = ex;
+//      } finally {
+//        transaction.complete();
+//      }
+//
+//      try {
+//        m_configUtil.getOnErrorRetryIntervalTimeUnit().sleep(m_configUtil.getOnErrorRetryInterval());
+//      } catch (InterruptedException ex) {
+//        //ignore
+//      }
+//    }
+//
+//    throw new ApolloConfigException(
+//        String.format("Get config services failed from %s", url), exception);
+//  }
+
+  //config和admin服务合并以后 直接返回config地址
   private synchronized void updateConfigServices() {
-    String url = assembleMetaServiceUrl();
-
-    HttpRequest request = new HttpRequest(url);
-    int maxRetries = 2;
-    Throwable exception = null;
-
-    for (int i = 0; i < maxRetries; i++) {
-      Transaction transaction = Tracer.newTransaction("Apollo.MetaService", "getConfigService");
-      transaction.addData("Url", url);
-      try {
-        HttpResponse<List<ServiceDTO>> response = m_httpUtil.doGet(request, m_responseType);
-        transaction.setStatus(Transaction.SUCCESS);
-        List<ServiceDTO> services = response.getBody();
-        if (services == null || services.isEmpty()) {
-          logConfigServiceToCat("Empty response!");
-          continue;
-        }
-        m_configServices.set(services);
-        logConfigServicesToCat(services);
-        return;
-      } catch (Throwable ex) {
-        Tracer.logEvent("ApolloConfigException", ExceptionUtil.getDetailMessage(ex));
-        transaction.setStatus(ex);
-        exception = ex;
-      } finally {
-        transaction.complete();
-      }
-
-      try {
-        m_configUtil.getOnErrorRetryIntervalTimeUnit().sleep(m_configUtil.getOnErrorRetryInterval());
-      } catch (InterruptedException ex) {
-        //ignore
-      }
-    }
-
-    throw new ApolloConfigException(
-        String.format("Get config services failed from %s", url), exception);
+    List<ServiceDTO> services = Lists.newArrayList();
+    ServiceDTO service = new ServiceDTO();
+    service.setAppName("configservice");
+    service.setInstanceId("configservice");
+    service.setHomepageUrl(MetaDomainConsts.getDevMeta());
+    services.add(service);
+    m_configServices.set(services);
   }
 
   private String assembleMetaServiceUrl() {

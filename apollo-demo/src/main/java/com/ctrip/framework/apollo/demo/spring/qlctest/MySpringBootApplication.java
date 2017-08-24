@@ -17,11 +17,11 @@ import java.util.Scanner;
  * @author Jason Song
  */
 @SpringBootApplication
-@EnableApolloConfig
+@EnableApolloConfig(value = "netposa.base'")
 public class MySpringBootApplication {
 
-	//	@Value(value = "${spring.redis}")
-	public String name;
+//	@Value(value = "${spring.redis.port}")
+//	public String name;
 
 
 	@Autowired
@@ -40,7 +40,7 @@ public class MySpringBootApplication {
 
 	@Bean
 	public MyBean PVMFilterRegistration() {
-		System.out.println(redisProperties.getHost());
+//		System.out.println(name);
 		return null;
 	}
 }

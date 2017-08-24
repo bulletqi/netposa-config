@@ -34,7 +34,8 @@ public class NamespaceUtil {
 			List<NamespaceDTO> namespaceList = response.getBody();
 			for (NamespaceDTO dto : namespaceList) {
 				String namespaceName = dto.getNamespaceName();
-				if(isPublish(namespaceName)){
+				String appId = dto.getAppId();
+				if(isPublish(appId,namespaceName)){
 					namespaces.add(namespaceName);
 				}
 			}
@@ -44,10 +45,10 @@ public class NamespaceUtil {
 	}
 
 	//是不是已经发布的namespace
-	private static boolean isPublish(String namespaces){
+	private static boolean isPublish(String appId ,String namespaces){
 		HttpUtil m_httpUtil = ApolloInjector.getInstance(HttpUtil.class);
-		String url = NetposaPropertiesUtil.getDevMeta() + "/apps/" + NetposaPropertiesUtil.getAppId() +
-				"/clusters/"+ ConfigConsts.CLUSTER_NAME_DEFAULT+"/namespaces/"+namespaces+"/releases/latest";
+		String url = NetposaPropertiesUtil.getDevMeta() + "/apps/" + appId +
+				"/clusters/"+ ConfigConsts.CLUSTER_NAME_DEFAULT + "/namespaces/"+namespaces+"/releases/latest";
 		HttpRequest request = new HttpRequest(url);
 		HttpResponse response = m_httpUtil.doGet(request,Object.class);
 		return (response.getStatusCode() == 200 && response.getBody() != null);

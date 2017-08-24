@@ -23,8 +23,14 @@ public class NetposaPropertiesUtil {
 	}
 
 	public static Boolean isEnableCenterConf(){
-		Boolean property = (Boolean)properties.get("spring.netposa.center-conf.enable");
-		return property != null && property;
+		Object property = properties.get("spring.netposa.center-conf.enable");
+		if(property != null){
+			if(property instanceof  Boolean){
+				return (Boolean)property;
+			}else if(property instanceof  String){
+				return Boolean.valueOf((String)property);
+			}
+		}
+		return true;
 	}
-
 }

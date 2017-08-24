@@ -15,7 +15,7 @@ public class MyBean {
 	@Autowired
 	private RedisProperties redisProperties;
 
-	@Value(value = "${spring.datasource.driverClassName}")
+	@Value(value = "${spring.redis.host}")
 	private String name;
 
 	@PostConstruct

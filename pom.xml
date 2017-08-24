@@ -370,5 +370,19 @@
 			</properties>
 		</profile>
 	</profiles>
+
+	<distributionManagement>
+		<repository>
+			<id>netposa-releases</id>
+			<name>Netposa Release Repository</name>
+			<url>http://192.168.60.253:9020/content/repositories/netposa-release</url>
+		</repository>
+		<snapshotRepository>
+			<id>netposa-snapshots</id>
+			<name>Netposa Snapshot Repository</name>
+			<url>http://192.168.60.253:9020/content/repositories/netposa-snapshot</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 </project>
 
