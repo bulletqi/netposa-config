@@ -51,8 +51,13 @@ public class NamespaceUtil {
 		HttpUtil m_httpUtil = ApolloInjector.getInstance(HttpUtil.class);
 		String url = NetposaPropertiesUtil.getDevMeta() + "/configs/" + appId + "/" +ConfigConsts.CLUSTER_NAME_DEFAULT + "/"+ namespaces;
 		HttpRequest request = new HttpRequest(url);
-		HttpResponse response = m_httpUtil.doGet(request,Object.class);
-		return (response.getStatusCode() == 200 &&
-				!gson.toJsonTree(response.getBody()).getAsJsonObject().get("configurations").isJsonNull());
+		try {
+			HttpResponse response = m_httpUtil.doGet(request,Object.class);
+			return (response.getStatusCode() == 200 &&
+					!gson.toJsonTree(response.getBody()).getAsJsonObject().get("configurations").isJsonNull());
+		}catch (Exception e){
+			//未发布的namespace不加载
+			return false;
+		}
 	}
 }
