@@ -34,7 +34,7 @@
 			<directory>target</directory>
 			<outputDirectory>/</outputDirectory>
 			<includes>
-				<include>npwonder-centerconf.jar</include>
+				<include>${project.build.finalName}.jar</include>
 			</includes>
 		</fileSet>
 	</fileSets>
