@@ -20,8 +20,8 @@ import java.util.Scanner;
 @EnableApolloConfig
 public class MySpringBootApplication {
 
-//	@Value(value = "${spring.redis.port}")
-//	public String name;
+	@Value(value = "${abc}")
+	public String name;
 
 
 //	@Autowired
@@ -40,7 +40,7 @@ public class MySpringBootApplication {
 
 	@Bean
 	public MyBean PVMFilterRegistration() {
-//		System.out.println(name);
+		System.out.println(name);
 		return null;
 	}
 }
