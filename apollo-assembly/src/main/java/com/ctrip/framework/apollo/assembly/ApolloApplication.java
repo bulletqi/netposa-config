@@ -24,7 +24,7 @@ public class ApolloApplication {
 
 		ConfigurableApplicationContext commonContext =
 				new SpringApplicationBuilder(ApolloApplication.class).web(false).run(args);
-		commonContext.addApplicationListener(new ApplicationPidFileWriter());
+//		commonContext.addApplicationListener(new ApplicationPidFileWriter());
 
 		//启动configservice
 		ConfigurableApplicationContext configContext =

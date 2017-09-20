@@ -1,5 +1,6 @@
 package com.ctrip.framework.apollo.core.utils;
 
+import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -11,26 +12,21 @@ public class NetposaPropertiesUtil {
 
 
 	public static String getAppId(){
-		return properties.getProperty("spring.application.name");
+		String appId = NetposaConstant.appId;
+		Objects.requireNonNull(appId,"配置中心应用id为空");
+		return appId;
 	}
 
 	public static String getDevMeta(){
-		String localtion = properties.getProperty("spring.netposa.center-conf.url");
-		if(localtion != null){
-			localtion = "http://" + localtion;
-		}
-		return  localtion;
+		String localtion = NetposaConstant.devMeta;
+		Objects.requireNonNull(localtion,"配置中心应用服务地址为空");
+		return  "http://" + localtion;
 	}
 
-	public static Boolean isEnableCenterConf(){
-		Object property = properties.get("spring.netposa.center-conf.enable");
-		if(property != null){
-			if(property instanceof  Boolean){
-				return (Boolean)property;
-			}else if(property instanceof  String){
-				return Boolean.valueOf((String)property);
-			}
+	public static Boolean isEnable(){
+		if(NetposaConstant.isEnable == null ){
+			return false;
 		}
-		return true;
+		return NetposaConstant.isEnable;
 	}
 }

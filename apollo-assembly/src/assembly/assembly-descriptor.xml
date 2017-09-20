@@ -13,7 +13,7 @@
 			<includes>
 				<include>**/*</include>
 			</includes>
-			<outputDirectory>/</outputDirectory>
+			<outputDirectory>/bin</outputDirectory>
 			<lineEnding>unix</lineEnding>
 		</fileSet>
 		<fileSet>

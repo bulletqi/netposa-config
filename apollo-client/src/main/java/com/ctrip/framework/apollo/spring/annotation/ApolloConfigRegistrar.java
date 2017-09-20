@@ -5,16 +5,18 @@ import com.ctrip.framework.apollo.core.utils.NetposaPropertiesUtil;
 import com.ctrip.framework.apollo.spring.config.PropertySourcesProcessor;
 import com.ctrip.framework.apollo.spring.util.BeanRegistrationUtil;
 import com.ctrip.framework.apollo.spring.util.NamespaceUtil;
+import com.ctrip.framework.apollo.spring.util.PropertiesContext;
 import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.annotation.AnnotationAttributes;
+import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotationMetadata;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,40 +24,44 @@ import java.util.List;
  */
 public class ApolloConfigRegistrar implements ImportBeanDefinitionRegistrar {
 
-	private static final Logger logger = LoggerFactory.getLogger(ApolloConfigRegistrar.class);
+    private static final Logger logger = LoggerFactory.getLogger(ApolloConfigRegistrar.class);
 
-	@Override
-	public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
-		Boolean isEnable = NetposaPropertiesUtil.isEnableCenterConf();
-		if (!isEnable) {
-			return; //不启用配置中心
-		}
-		AnnotationAttributes attributes = AnnotationAttributes.fromMap(importingClassMetadata
-				.getAnnotationAttributes(EnableApolloConfig.class.getName()));
-		String[] namespaces = attributes.getStringArray("value");
+    @Override
+    public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
+        DefaultListableBeanFactory beanFactory = (DefaultListableBeanFactory) registry;
+        Environment environment = beanFactory.getBean(Environment.class);
+        PropertiesContext.setNetposaProperties(environment);
+        if (NetposaPropertiesUtil.isEnable()) {
+            logger.info("配置中心服务开始启用");
+            AnnotationAttributes attributes = AnnotationAttributes.fromMap(importingClassMetadata
+                    .getAnnotationAttributes(EnableApolloConfig.class.getName()));
+            String[] namespaces = attributes.getStringArray("value");
 
-		List<String> namespaceList;
-		if (namespaces.length == 1 && namespaces[0].equals(ConfigConsts.NAMESPACE_APPLICATION)) {
-			//如果是默认值，获取所有的namespace
-			try {
-				namespaceList = NamespaceUtil.getAllNamespace();
-			} catch (Exception e) {
-				logger.error("配置中心加载namespace失败，读取本地配置", e);
-				return ;
-			}
-		} else {
-			namespaceList = Lists.newArrayList(namespaces);
-		}
-		int order = attributes.getNumber("order");
-		PropertySourcesProcessor.addNamespaces(namespaceList, order);
+            List<String> namespaceList;
+            if (namespaces.length == 1 && namespaces[0].equals(ConfigConsts.NAMESPACE_APPLICATION)) {
+                //如果是默认值，获取所有的namespace
+                try {
+                    namespaceList = NamespaceUtil.getAllNamespace();
+                } catch (Exception e) {
+                    logger.error("配置中心加载namespace失败,不启用配置中心", e);
+                    return;
+                }
+            } else {
+                namespaceList = Lists.newArrayList(namespaces);
+            }
+            int order = attributes.getNumber("order");
+            PropertySourcesProcessor.addNamespaces(namespaceList, order);
 
-		BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, PropertySourcesPlaceholderConfigurer.class.getName(),
-				PropertySourcesPlaceholderConfigurer.class);
+            BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, PropertySourcesPlaceholderConfigurer.class.getName(),
+                    PropertySourcesPlaceholderConfigurer.class);
 
-		BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, PropertySourcesProcessor.class.getName(),
-				PropertySourcesProcessor.class);
+            BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, PropertySourcesProcessor.class.getName(),
+                    PropertySourcesProcessor.class);
 
-		BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, ApolloAnnotationProcessor.class.getName(),
-				ApolloAnnotationProcessor.class);
-	}
+            BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, ApolloAnnotationProcessor.class.getName(),
+                    ApolloAnnotationProcessor.class);
+        } else {
+            logger.info("配置中心服务没有启用");
+        }
+    }
 }
