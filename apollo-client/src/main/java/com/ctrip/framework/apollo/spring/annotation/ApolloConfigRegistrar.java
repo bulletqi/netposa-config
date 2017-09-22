@@ -24,44 +24,43 @@ import java.util.List;
  */
 public class ApolloConfigRegistrar implements ImportBeanDefinitionRegistrar {
 
-    private static final Logger logger = LoggerFactory.getLogger(ApolloConfigRegistrar.class);
+	private static final Logger logger = LoggerFactory.getLogger(ApolloConfigRegistrar.class);
 
-    @Override
-    public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
-        DefaultListableBeanFactory beanFactory = (DefaultListableBeanFactory) registry;
-        Environment environment = beanFactory.getBean(Environment.class);
-        PropertiesContext.setNetposaProperties(environment);
-        if (NetposaPropertiesUtil.isEnable()) {
-            logger.info("配置中心服务开始启用");
-            AnnotationAttributes attributes = AnnotationAttributes.fromMap(importingClassMetadata
-                    .getAnnotationAttributes(EnableApolloConfig.class.getName()));
-            String[] namespaces = attributes.getStringArray("value");
+	@Override
+	public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
+		try {
+			DefaultListableBeanFactory beanFactory = (DefaultListableBeanFactory) registry;
+			Environment environment = beanFactory.getBean(Environment.class);
+			PropertiesContext.setNetposaProperties(environment);
+			if (NetposaPropertiesUtil.isEnable()) {
+				logger.info("配置中心服务开始启用");
+				AnnotationAttributes attributes = AnnotationAttributes.fromMap(importingClassMetadata
+						.getAnnotationAttributes(EnableApolloConfig.class.getName()));
+				String[] namespaces = attributes.getStringArray("value");
 
-            List<String> namespaceList;
-            if (namespaces.length == 1 && namespaces[0].equals(ConfigConsts.NAMESPACE_APPLICATION)) {
-                //如果是默认值，获取所有的namespace
-                try {
-                    namespaceList = NamespaceUtil.getAllNamespace();
-                } catch (Exception e) {
-                    logger.error("配置中心加载namespace失败,不启用配置中心", e);
-                    return;
-                }
-            } else {
-                namespaceList = Lists.newArrayList(namespaces);
-            }
-            int order = attributes.getNumber("order");
-            PropertySourcesProcessor.addNamespaces(namespaceList, order);
+				List<String> namespaceList;
+				if (namespaces.length == 1 && namespaces[0].equals(ConfigConsts.NAMESPACE_APPLICATION)) {
+					//如果是默认值，获取所有的namespace
+					namespaceList = NamespaceUtil.getAllNamespace();
+				} else {
+					namespaceList = Lists.newArrayList(namespaces);
+				}
+				int order = attributes.getNumber("order");
+				PropertySourcesProcessor.addNamespaces(namespaceList, order);
 
-            BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, PropertySourcesPlaceholderConfigurer.class.getName(),
-                    PropertySourcesPlaceholderConfigurer.class);
+				BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, PropertySourcesPlaceholderConfigurer.class.getName(),
+						PropertySourcesPlaceholderConfigurer.class);
 
-            BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, PropertySourcesProcessor.class.getName(),
-                    PropertySourcesProcessor.class);
+				BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, PropertySourcesProcessor.class.getName(),
+						PropertySourcesProcessor.class);
 
-            BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, ApolloAnnotationProcessor.class.getName(),
-                    ApolloAnnotationProcessor.class);
-        } else {
-            logger.info("配置中心服务没有启用");
-        }
-    }
+				BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, ApolloAnnotationProcessor.class.getName(),
+						ApolloAnnotationProcessor.class);
+			} else {
+				logger.info("配置中心服务没有启用");
+			}
+		} catch (Exception e) {
+			logger.error("配置中心加载namespace失败,不启用配置中心", e);
+		}
+	}
 }

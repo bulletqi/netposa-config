@@ -1,2 +1,4 @@
-#!/bin/bash
-kill -9 `less application.pid`
+#!/usr/bin/env bash
+readonly BIN_HOME=$(cd `dirname $0`; pwd)
+source "$BIN_HOME/run-manage.sh"  stop
+exit 0

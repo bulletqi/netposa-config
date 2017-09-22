@@ -1,3 +1,4 @@
-#!/bin/bash
-chmod -R 777 jre
-nohup ./jre/bin/java -jar npwonder-centerconf.jar >/dev/null 2>&1 &
+#!/usr/bin/env bash
+readonly BIN_HOME=$(cd `dirname $0`; pwd)
+source "$BIN_HOME/run-manage.sh"  start
+exit 0

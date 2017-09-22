@@ -20,7 +20,7 @@ import java.util.Scanner;
 @EnableApolloConfig
 public class MySpringBootApplication {
 
-	@Value(value = "${abc}")
+	@Value(value = "${spring.datasource.driver-class-name}")
 	public String name;
 
 

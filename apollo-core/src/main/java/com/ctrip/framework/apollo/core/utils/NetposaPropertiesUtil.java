@@ -8,8 +8,7 @@ import java.util.Properties;
  */
 public class NetposaPropertiesUtil {
 
-	public final static Properties properties = ResourceUtils.loadNetposaConfigFile();
-
+//	public final static Properties properties = ResourceUtils.loadNetposaConfigFile();
 
 	public static String getAppId(){
 		String appId = NetposaConstant.appId;
@@ -23,9 +22,9 @@ public class NetposaPropertiesUtil {
 		return  "http://" + localtion;
 	}
 
-	public static Boolean isEnable(){
+	public static boolean isEnable(){
 		if(NetposaConstant.isEnable == null ){
-			return false;
+			return true;
 		}
 		return NetposaConstant.isEnable;
 	}

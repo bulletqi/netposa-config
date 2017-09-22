@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.ctrip.framework.apollo</groupId>
 		<artifactId>apollo</artifactId>
-		<version>0.8.0</version>
+		<version>0.8.1</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -40,9 +40,9 @@
 							<goal>single</goal>
 						</goals>
 						<configuration>
-							<finalName>npwonder-centerconf</finalName>
+							<finalName>vias-centerconf-${project.version}</finalName>
 							<appendAssemblyId>false</appendAssemblyId>
-							<outputDirectory>../output/</outputDirectory>
+							<outputDirectory>../dist/</outputDirectory>
 							<descriptors>
 								<descriptor>src/assembly/assembly-descriptor.xml</descriptor>
 							</descriptors>
