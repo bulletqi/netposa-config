@@ -11,15 +11,15 @@ public class NetposaPropertiesUtil {
 //	public final static Properties properties = ResourceUtils.loadNetposaConfigFile();
 
 	public static String getAppId(){
-		String appId = NetposaConstant.appId;
-		Objects.requireNonNull(appId,"配置中心应用id为空");
-		return appId;
+		return NetposaConstant.appId;
 	}
 
 	public static String getDevMeta(){
 		String localtion = NetposaConstant.devMeta;
-		Objects.requireNonNull(localtion,"配置中心应用服务地址为空");
-		return  "http://" + localtion;
+		if(localtion != null){
+			localtion = "http://" + localtion;
+		}
+		return  localtion;
 	}
 
 	public static boolean isEnable(){
