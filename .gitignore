@@ -27,7 +27,7 @@ target
 *.orig
 
 #log file 
-logs/
+logs*/
 
 #output folder 
 output/
