@@ -40,7 +40,7 @@
 							<goal>single</goal>
 						</goals>
 						<configuration>
-							<finalName>vias-centerconf-${project.version}</finalName>
+							<finalName>vias-centerconf</finalName>
 							<appendAssemblyId>false</appendAssemblyId>
 							<outputDirectory>../dist/</outputDirectory>
 							<descriptors>
