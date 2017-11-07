@@ -41,7 +41,7 @@
 						</goals>
 						<configuration>
 							<finalName>vias-centerconf</finalName>
-							<appendAssemblyId>false</appendAssemblyId>
+							<appendAssemblyId>true</appendAssemblyId>
 							<outputDirectory>../dist/</outputDirectory>
 							<descriptors>
 								<descriptor>src/assembly/assembly-descriptor.xml</descriptor>
