@@ -357,9 +357,6 @@
 				<h2.portaldb.fileLocaltion>jdbc:h2:file:./h2scripts/apolloportaldb;mode=MySQL;IGNORECASE=TRUE;IFEXISTS=TRUE;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE</h2.portaldb.fileLocaltion>
 				<profiles.active>local</profiles.active>
 			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
 		</profile>
 		<profile>
 			<id>deploy</id>
@@ -368,6 +365,9 @@
 				<h2.portaldb.fileLocaltion>jdbc:h2:file:./db/apolloportaldb;mode=MySQL;IGNORECASE=TRUE;IFEXISTS=TRUE;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE</h2.portaldb.fileLocaltion>
 				<profiles.active>deploy</profiles.active>
 			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 		</profile>
 	</profiles>
 
