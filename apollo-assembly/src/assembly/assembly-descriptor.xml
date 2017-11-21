@@ -47,5 +47,12 @@
 			</includes>
 			<outputDirectory>/config</outputDirectory>
 		</fileSet>
+		<fileSet>
+			<directory>${project.basedir}/src/main/resources</directory>
+			<includes>
+				<include>*.ini</include>
+			</includes>
+			<outputDirectory>/</outputDirectory>
+		</fileSet>
 	</fileSets>
 </assembly>

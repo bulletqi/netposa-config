@@ -1,6 +1,6 @@
 package com.ctrip.framework.apollo.spring.util;
 
-import com.ctrip.framework.apollo.core.utils.NetposaConstant;
+import com.ctrip.framework.apollo.core.NetposaConstant;
 import com.ctrip.framework.apollo.core.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

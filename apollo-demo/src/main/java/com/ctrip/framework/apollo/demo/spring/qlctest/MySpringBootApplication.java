@@ -20,7 +20,7 @@ import java.util.Scanner;
 @EnableApolloConfig
 public class MySpringBootApplication {
 
-	@Value(value = "${spring.datasource.driver-class-name}")
+	@Value(value = "${netposa.pcc.options}")
 	public String name;
 
 

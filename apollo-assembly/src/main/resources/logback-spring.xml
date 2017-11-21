@@ -22,6 +22,11 @@
 		</rollingPolicy>
 	</appender>
 
+	<logger name="com.ctrip" additivity="false" level="DEBUG">
+		<appender-ref ref="CONSOLE"/>
+		<appender-ref ref="TIME_FILE"/>
+	</logger>
+
 	<root level="INFO">
 		<appender-ref ref="CONSOLE"/>
 		<appender-ref ref="TIME_FILE"/>

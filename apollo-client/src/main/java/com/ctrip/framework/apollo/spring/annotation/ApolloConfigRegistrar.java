@@ -33,7 +33,7 @@ public class ApolloConfigRegistrar implements ImportBeanDefinitionRegistrar {
 			Environment environment = beanFactory.getBean(Environment.class);
 			PropertiesContext.setNetposaProperties(environment);
 			if (NetposaPropertiesUtil.isEnable()) {
-				logger.info("配置中心服务开始启用");
+				logger.info("#######开始启用配置中心服务#######");
 				AnnotationAttributes attributes = AnnotationAttributes.fromMap(importingClassMetadata
 						.getAnnotationAttributes(EnableApolloConfig.class.getName()));
 				String[] namespaces = attributes.getStringArray("value");
@@ -57,7 +57,7 @@ public class ApolloConfigRegistrar implements ImportBeanDefinitionRegistrar {
 				BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, ApolloAnnotationProcessor.class.getName(),
 						ApolloAnnotationProcessor.class);
 			} else {
-				logger.info("配置中心服务没有启用");
+				logger.info("#######不启用配置中心服务#######");
 			}
 		} catch (Exception e) {
 			logger.error("配置中心加载namespace失败,不启用配置中心", e);

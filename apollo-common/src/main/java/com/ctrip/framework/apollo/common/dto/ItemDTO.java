@@ -26,6 +26,14 @@ public class ItemDTO extends BaseDTO{
     this.lineNum = lineNum;
   }
 
+  public ItemDTO(String key, String value, String comment, int lineNum,long namespaceId) {
+    this.key = key;
+    this.value = value;
+    this.comment = comment;
+    this.lineNum = lineNum;
+    this.namespaceId = namespaceId;
+  }
+
   public long getId() {
     return id;
   }

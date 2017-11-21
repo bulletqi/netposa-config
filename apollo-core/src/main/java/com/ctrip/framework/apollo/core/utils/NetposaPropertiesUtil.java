@@ -1,7 +1,6 @@
 package com.ctrip.framework.apollo.core.utils;
 
-import java.util.Objects;
-import java.util.Properties;
+import com.ctrip.framework.apollo.core.NetposaConstant;
 
 /**
  * 从业务应用的配置文件中读取信息
