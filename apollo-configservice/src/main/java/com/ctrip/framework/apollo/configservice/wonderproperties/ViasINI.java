@@ -31,7 +31,7 @@ public class ViasINI{
 			//加载默认配置
 			resourcePropertySource =
 					new ResourcePropertySource("classpath:/system/vias.ini");
-			logger.info("######加载默认配置模板######");
+			logger.info("----自定义路径不正确,加载默认配置模板----");
 		}
 	}
 

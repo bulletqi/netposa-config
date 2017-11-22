@@ -55,9 +55,9 @@ public class WonderPropertiesCompent {
 			ItemChangeSets propertiesItems = createItems(namespace.getId()); //配置有变化
 			logger.debug("propertiesItems is empty:{}",propertiesItems.isEmpty());
 			if(!propertiesItems.isEmpty()){
-				logger.debug("配置新增:{}个",propertiesItems.getCreateItems().size());
-				logger.debug("配置修改:{}个",propertiesItems.getUpdateItems().size());
-				logger.debug("配置删除:{}个",propertiesItems.getDeleteItems().size());
+				logger.debug("[配置新增:{}个]",propertiesItems.getCreateItems().size());
+				logger.debug("[配置修改:{}个]",propertiesItems.getUpdateItems().size());
+				logger.debug("[配置删除:{}个]",propertiesItems.getDeleteItems().size());
 
 				//创建配置项
 				itemSetService.updateSet(

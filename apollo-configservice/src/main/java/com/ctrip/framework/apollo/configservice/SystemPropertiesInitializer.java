@@ -30,7 +30,7 @@ public class SystemPropertiesInitializer  implements ApplicationListener<Applica
 				try{
 					NetposaConstant.condition.await();
 					wonderPropertiesCompent.initSystem();
-					logger.info("#######配置中心系统初始化完成#######");
+					logger.info("--------配置中心系统初始化完成--------");
 				} catch (Exception e) {
 					logger.error("初始化系统配置失败",e);
 				}finally {
