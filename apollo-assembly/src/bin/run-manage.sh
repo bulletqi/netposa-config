@@ -1,34 +1,43 @@
 #!/usr/bin/env bash
 
-readonly APP_HOME=$(dirname $(cd `dirname $0`; pwd))
+FILE_PATH=
+SERVER_NAME=vias-centerconf-service
+readonly APP_HOME=${FILE_PATH:-$(dirname $(cd `dirname $0`; pwd))}
 
 readonly JAVA_HOME="$APP_HOME/jre"
+
 readonly CONFIG_HOME="$APP_HOME/config/"
 readonly LIB_HOME="$APP_HOME/lib"
 readonly LOGS_HOME="$APP_HOME/logs"
 
-readonly APP_MAIN_CLASS="npwonder-centerconf.jar"
 readonly PID_FILE="$LOGS_HOME/application.pid"
+readonly APP_MAIN_CLASS="npwonder-centerconf.jar"
 readonly LOG_CONFIG="$CONFIG_HOME/logback-spring.xml"
 
 readonly JAVA_RUN="-Dlogs.home=$LOGS_HOME -Dlogging.config=$LOG_CONFIG -Dspring.config.location=file:$CONFIG_HOME -Dspring.pid.file=$PID_FILE -Dspring.pid.fail-on-write-error=true"
-readonly JAVA_OPTS="-server -Xms512m -Xmx512m -XX:PermSize=128M -XX:MaxPermSize=256M $JAVA_RUN"
+readonly JAVA_OPTS="-server -Xms1024m -Xmx1024m -XX:PermSize=128M -XX:MaxPermSize=256M $JAVA_RUN"
 
 readonly JAVA="$JAVA_HOME/bin/java"
 
-
 PID=0
 
-function env(){
-    if [ ! -x "$LOGS_HOME" ]
-    then
-      mkdir $LOGS_HOME
-    fi
-    chmod +x -R "$JAVA_HOME/bin/"
+
+if [ ! -x "$LOGS_HOME" ]
+then
+  mkdir $LOGS_HOME
+fi
+chmod +x -R "$JAVA_HOME/bin/"
+
+function install(){
+
+  [[ ! -n $FILE_PATH ]] && sed -i "s#FILE_PATH=#FILE_PATH=$APP_HOME#" $APP_HOME/$0
+  [[ -e /usr/sbin/$SERVER_NAME || -L /usr/sbin/$SERVER_NAME ]] && rm -rf /usr/sbin/$SERVER_NAME
+  ln -s $APP_HOME/$0 /usr/sbin/$SERVER_NAME
+
 }
 
-function checkPid() {
-    PID=$(ps -ef | grep $APP_MAIN_CLASS | grep -v 'grep' | awk '{print int($2)}')
+function checkpid() {
+   PID=$(ps -ef | grep $APP_MAIN_CLASS | grep -v 'grep' | awk '{print int($2)}')
     if [ -n "$PID" ]
     then
       echo "Found APP=$APP_MAIN_CLASS and PID=$PID"
@@ -39,7 +48,7 @@ function checkPid() {
 }
 
 function start() {
-   checkPid
+   checkpid
    if [ $PID -ne 0 ]
    then
       echo "================================"
@@ -51,7 +60,7 @@ function start() {
       echo "Exec cmmand : $JAVA_CMD"
       sh -c "$JAVA_CMD"
       sleep 3
-      checkPid
+      checkpid
       if [ $PID -ne 0 ]
       then
          echo "(PID=$PID) [OK]"
@@ -62,18 +71,19 @@ function start() {
 }
 
 function stop() {
-   checkPid
+   checkpid
    if [ $PID -ne 0 ]
    then
       echo -n "Stopping $APP_MAIN_CLASS ...(PID=$PID) "
       kill -9 $PID
       if [ $? -eq 0 ]
       then
+	     echo 0 > $PID_FILE
          echo "[OK]"
       else
          echo "[Failed]"
       fi
-      checkPid
+      checkpid
       if [ $PID -ne 0 ]
       then
          stop
@@ -86,7 +96,7 @@ function stop() {
 }
 
 function status() {
-   checkPid
+   checkpid
    if [ $PID -ne 0 ]
    then
       echo "$APP_MAIN_CLASS is running! (PID=$PID)"
@@ -97,47 +107,44 @@ function status() {
 
 function info() {
    echo "System Information:"
-   echo
+   echo 
    echo "****************************"
    echo `head -n 1 /etc/issue`
    echo `uname -a`
    echo
    echo "JAVA_HOME=$JAVA_HOME"
-   echo
+   echo 
    echo "JAVA Environment Information:"
-   echo `$JAVA_HOME/bin/java -version`
+   echo `$JAVA -version`
    echo
    echo "APP_HOME=$APP_HOME"
    echo "APP_MAIN_CLASS=$APP_MAIN_CLASS"
-   echo
+   echo 
    echo "****************************"
 }
 
-function main(){
-    env
-    case "$1" in
-      'start')
-        start
-        ;;
-      'stop')
-        stop
-        ;;
-      'restart')
-        stop
-        start
-        ;;
-      'status')
-        status
-        ;;
-      'info')
-        info
-        ;;
-       *)
-        echo "Usage: $0 {help|start|stop|restart|status|info}"
-        ;;
-    esac
-    exit 0
-}
-
-#go
-main $*
+case "$1" in
+   'start')
+      start
+      ;;
+   'stop')
+     stop
+     ;;
+   'restart')
+     stop
+     start
+     ;;
+   'status')
+     status
+     ;;
+   'info')
+     info
+     ;;
+   'install')
+     install
+     ;;
+    *)
+     echo "Usage: $0 {help|start|stop|restart|status|info|install}"
+     ;;
+esac
+exit 0
