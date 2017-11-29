@@ -21,87 +21,101 @@ readonly JAVA="$JAVA_HOME/bin/java"
 
 PID=0
 
-
 if [ ! -x "$LOGS_HOME" ]
 then
   mkdir $LOGS_HOME
 fi
 chmod +x -R "$JAVA_HOME/bin/"
 
+functions="/etc/functions.sh"
+if test -f $functions ; then
+  . $functions
+else
+  success()
+  {
+    echo " SUCCESS! $@"
+  }
+  failure()
+  {
+    echo " ERROR! $@"
+  }
+  warning()
+  {
+    echo "WARNING! $@"
+  }
+fi
+
 function install(){
 
-  [[ ! -n $FILE_PATH ]] && sed -i "s#FILE_PATH=#FILE_PATH=$APP_HOME#" $APP_HOME/$0
-  [[ -e /usr/sbin/$SERVER_NAME || -L /usr/sbin/$SERVER_NAME ]] && rm -rf /usr/sbin/$SERVER_NAME
-  ln -s $APP_HOME/$0 /usr/sbin/$SERVER_NAME
+  if [[ ! -n $FILE_PATH ]];then
+    sed -i "s#FILE_PATH=#FILE_PATH=$APP_HOME#" $APP_HOME/$0
 
+    if [[ -e /usr/sbin/$SERVER_NAME || -L /usr/sbin/$SERVER_NAME ]];then
+
+      rm -rf /usr/sbin/$SERVER_NAME && ln -s $APP_HOME/$0 /usr/sbin/$SERVER_NAME
+
+    fi
+  fi
 }
 
 function checkpid() {
    PID=$(ps -ef | grep $APP_MAIN_CLASS | grep -v 'grep' | awk '{print int($2)}')
-    if [ -n "$PID" ]
+    if [[ -n "$PID" ]]
     then
-      echo "Found APP=$APP_MAIN_CLASS and PID=$PID"
+      return 0
     else
-      echo "Not Found APP=$APP_MAIN_CLASS"
-      PID=0
+      return 1
     fi
 }
 
 function start() {
    checkpid
-   if [ $PID -ne 0 ]
+   if [[ $? -eq 0 ]]
    then
-      echo "================================"
-      echo "warn: $APP_MAIN_CLASS already started! (PID=$PID)"
-      echo "================================"
+      warning "[$APP_MAIN_CLASS]: already started! (PID=$PID)"
    else
-      echo "Starting $APP_MAIN_CLASS ..."
+      echo -n "[$APP_MAIN_CLASS]: Starting ..."
       JAVA_CMD="nohup $JAVA $JAVA_OPTS -jar $LIB_HOME/$APP_MAIN_CLASS > /dev/null 2>&1 &"
-      echo "Exec cmmand : $JAVA_CMD"
+      # echo "Exec cmmand : $JAVA_CMD"
       sh -c "$JAVA_CMD"
       sleep 3
       checkpid
-      if [ $PID -ne 0 ]
+      if [[ $? -eq 0 ]]
       then
-         echo "(PID=$PID) [OK]"
+         success "(PID=$PID) "
       else
-         echo "User command status check status."
+         failure " "
       fi
    fi
 }
 
 function stop() {
    checkpid
-   if [ $PID -ne 0 ]
+   if [[ $? -eq 0 ]];
    then
-      echo -n "Stopping $APP_MAIN_CLASS ...(PID=$PID) "
+      echo -n "[$APP_MAIN_CLASS]: Shutting down ...(PID=$PID) "
       kill -9 $PID
-      if [ $? -eq 0 ]
+      if [[ $? -eq 0 ]];
       then
 	     echo 0 > $PID_FILE
-         echo "[OK]"
+         success " "
       else
-         echo "[Failed]"
-      fi
-      checkpid
-      if [ $PID -ne 0 ]
-      then
-         stop
+         failure " "
       fi
    else
-      echo "================================"
-      echo "warn: $APP_MAIN_CLASS is not running"
-      echo "================================"
+      warning "[$APP_MAIN_CLASS]: is not running ..."
    fi
 }
 
 function status() {
    checkpid
-   if [ $PID -ne 0 ]
+   if [[ $? -eq 0 ]]
    then
-      echo "$APP_MAIN_CLASS is running! (PID=$PID)"
+      success "[$APP_MAIN_CLASS]: is running! (PID=$PID)"
+      return 0
    else
-      echo "$APP_MAIN_CLASS is not running"
+      failure "[$APP_MAIN_CLASS]: is not running"
+      return 1
    fi
 }
 
