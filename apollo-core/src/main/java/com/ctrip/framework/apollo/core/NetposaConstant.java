@@ -21,5 +21,7 @@ public class NetposaConstant  {
 	public static final String default_orgId = "netposa";
 	public static final String default_full_namespace = default_orgId + "." + default_base_namespece ;
 
+	//配置项初始化标记
+	public static boolean WONDER_PROPERTIES_FLAG = false;
 
 }

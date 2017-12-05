@@ -86,6 +86,7 @@ public class BaseProjectInitializer implements ApplicationListener<ApplicationRe
 			assignNamespaceRoleToOperator(NetposaConstant.default_appId, appNamespace.getName());
 			publisher.publishEvent(new AppNamespaceCreationEvent(createdAppNamespace));
 			logger.debug("图解系统公共配置项目初始化成功-> appId:{}",NetposaConstant.default_appId);
+			NetposaConstant.WONDER_PROPERTIES_FLAG = true;
 		}
 	}
 

@@ -2,6 +2,7 @@ package com.ctrip.framework.apollo.configservice.wonderproperties;
 
 import com.ctrip.framework.apollo.biz.entity.Namespace;
 import com.ctrip.framework.apollo.biz.repository.ItemRepository;
+import com.ctrip.framework.apollo.biz.service.AppService;
 import com.ctrip.framework.apollo.biz.service.ItemSetService;
 import com.ctrip.framework.apollo.biz.service.NamespaceService;
 import com.ctrip.framework.apollo.biz.service.ReleaseService;
@@ -16,6 +17,7 @@ import org.apache.commons.lang.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.support.ResourcePropertySource;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -44,16 +46,16 @@ public class WonderPropertiesCompent {
 	 * 系统初始化
 	 */
 	public void initSystem() throws Exception{
-		viasINI.loadViasINI(); //加载配置项
-		this.initProperties();  //初始化配置
+		this.initProperties();
 	}
 
 	private void initProperties() {
 		Namespace namespace = namespaceService.findOne(NetposaConstant.default_appId ,
 				NetposaConstant.default_clusterName , NetposaConstant.default_full_namespace);
-		if( namespace != null ){
-			ItemChangeSets propertiesItems = createItems(namespace.getId()); //配置有变化
+		if( namespace != null && NetposaConstant.WONDER_PROPERTIES_FLAG){
+			ItemChangeSets propertiesItems = createItems(namespace.getId());
 			logger.debug("propertiesItems is empty:{}",propertiesItems.isEmpty());
+			//todo 已经没有变化的配置项了 全是新增下个版本去掉
 			if(!propertiesItems.isEmpty()){
 				logger.debug("[配置新增:{}个]",propertiesItems.getCreateItems().size());
 				logger.debug("[配置修改:{}个]",propertiesItems.getUpdateItems().size());
@@ -72,8 +74,8 @@ public class WonderPropertiesCompent {
 				releaseService.publish(namespace, time + " release",
 						"初始化发布", userId, false);
 			}
-		}else{
-			logger.error("默认应用不存在,初始化配置项取消");
+
+			logger.info("[配置中心默认配置项初始化完成]");
 		}
 	}
 
@@ -109,10 +111,11 @@ public class WonderPropertiesCompent {
 
 	private List<ItemDTO> parsePropertiesInfo(Long defaultNamespaceId) {
 		List<ItemDTO> list = new ArrayList<>();
-		String[] propertyNames = baseProperties.getPropertyNames();
+		ResourcePropertySource resourcePropertySource = baseProperties.getResourcePropertySource();
+		String[] propertyNames = resourcePropertySource.getPropertyNames();
 		int i = 0;
 		for (String key : propertyNames) {
-			String val = String.valueOf(baseProperties.getProperty(key));
+			String val = String.valueOf(resourcePropertySource.getProperty(key));
 			int spiltStart = val.indexOf("$");
 			if (spiltStart != -1) {
 				int endStart = val.length();
@@ -138,7 +141,6 @@ public class WonderPropertiesCompent {
 					val = getReplaceValue(val);
 				}
 			}
-			//logger.debug("解析配置项key->{},value->{}", key, val);
 			list.add(new ItemDTO(key, val, "系统初始化添加", ++i, defaultNamespaceId));
 		}
 		return list;
@@ -149,7 +151,8 @@ public class WonderPropertiesCompent {
 	 * 查找替换具体的值
 	 */
 	private String getReplaceValue(String template) {
-		String value = String.valueOf(viasINI.getVaisINI().getProperty(template));
+		ResourcePropertySource viasProperties = viasINI.getResourcePropertySource();
+		String value = String.valueOf(viasProperties.getProperty(template));
 		if (value.contains("$")) {
 			int spiltStart = value.indexOf("$");
 			int endStart = value.length();
@@ -161,7 +164,7 @@ public class WonderPropertiesCompent {
 				value = StringUtils.join(mulitValue, ",");
 			} else {
 				value = value.substring(spiltStart + 1, endStart);
-				value = String.valueOf(viasINI.getVaisINI().getProperty(value));
+				value = String.valueOf(viasProperties.getProperty(value));
 			}
 		}
 		if("null".equals(value) || StringUtils.isBlank(value)){
