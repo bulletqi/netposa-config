@@ -353,21 +353,8 @@
 		<profile>
 			<id>local</id>
 			<properties>
-				<h2.configdb.fileLocaltion>jdbc:h2:file:./h2scripts/apolloconfigdb;mode=MySQL;IGNORECASE=TRUE;IFEXISTS=TRUE;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE</h2.configdb.fileLocaltion>
-				<h2.portaldb.fileLocaltion>jdbc:h2:file:./h2scripts/apolloportaldb;mode=MySQL;IGNORECASE=TRUE;IFEXISTS=TRUE;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE</h2.portaldb.fileLocaltion>
-				<profiles.active>local</profiles.active>
+				<h2.configdb.fileLocaltion>./h2scripts</h2.configdb.fileLocaltion>
 			</properties>
-		</profile>
-		<profile>
-			<id>deploy</id>
-			<properties>
-				<h2.configdb.fileLocaltion>jdbc:h2:file:./db/apolloconfigdb;mode=MySQL;IGNORECASE=TRUE;IFEXISTS=TRUE;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE</h2.configdb.fileLocaltion>
-				<h2.portaldb.fileLocaltion>jdbc:h2:file:./db/apolloportaldb;mode=MySQL;IGNORECASE=TRUE;IFEXISTS=TRUE;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE</h2.portaldb.fileLocaltion>
-				<profiles.active>deploy</profiles.active>
-			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
 		</profile>
 	</profiles>
 

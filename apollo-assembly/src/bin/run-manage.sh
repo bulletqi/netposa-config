@@ -9,12 +9,13 @@ readonly JAVA_HOME="$APP_HOME/jre"
 readonly CONFIG_HOME="$APP_HOME/config/"
 readonly LIB_HOME="$APP_HOME/lib"
 readonly LOGS_HOME="$APP_HOME/logs"
+readonly APOLLO_DB="$APP_HOME/db"
 
 readonly PID_FILE="$LOGS_HOME/application.pid"
 readonly APP_MAIN_CLASS="npwonder-centerconf.jar"
 readonly LOG_CONFIG="$CONFIG_HOME/logback-spring.xml"
 
-readonly JAVA_RUN="-Dlogs.home=$LOGS_HOME -Dlogging.config=$LOG_CONFIG -Dspring.config.location=file:$CONFIG_HOME -Dspring.pid.file=$PID_FILE -Dspring.pid.fail-on-write-error=true"
+readonly JAVA_RUN="-Dh2.configdb.fileLocaltion=$APOLLO_DB -Dlogs.home=$LOGS_HOME -Dlogging.config=$LOG_CONFIG -Dspring.config.location=file:$CONFIG_HOME -Dspring.pid.file=$PID_FILE -Dspring.pid.fail-on-write-error=true"
 readonly JAVA_OPTS="-server -Xms1024m -Xmx1024m -XX:PermSize=128M -XX:MaxPermSize=256M $JAVA_RUN"
 
 readonly JAVA="$JAVA_HOME/bin/java"
@@ -80,13 +81,26 @@ function start() {
       sh -c "$JAVA_CMD"
       sleep 3
       checkpid
-      if [[ $? -eq 0 ]]
-      then
-         success "(PID=$PID) "
+      if [[ $? -eq 0 ]];then
+	for (( i = 0 ; i < 100 ; i++ ));do
+           page=`curl -s http://127.0.0.1:20003/apps`
+	   if [[ ${#page} > 10 ]];
+      	   then
+      		success "(PID=$PID) "
+		break
+      	   else
+         	#failure " "
+		sleep 1
+      	   fi
+	   if [[ i == 99 ]];then
+		failure " "
+		break
+	   fi
+        done
       else
-         failure " "
+	failure " "
       fi
-   fi
+    fi
 }
 
 function stop() {

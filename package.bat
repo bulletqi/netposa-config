@@ -1,1 +1,0 @@
-start mvn -DskipTests clean package -Pdeploy
