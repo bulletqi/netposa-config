@@ -151,6 +151,9 @@ public class WonderPropertiesCompent {
 	 * 查找替换具体的值
 	 */
 	private String getReplaceValue(String template) {
+		if(template.contains("$")){
+			template = template.substring(1);
+		}
 		ResourcePropertySource viasProperties = viasINI.getResourcePropertySource();
 		String value = String.valueOf(viasProperties.getProperty(template));
 		if (value.contains("$")) {
@@ -159,12 +162,16 @@ public class WonderPropertiesCompent {
 			if (value.contains(",")) {
 				List<String> mulitValue = new ArrayList<>();
 				for (String key : value.split(",")) {
-					mulitValue.add(getReplaceValue(key.substring(1))); //去掉开头的$
+					mulitValue.add(getReplaceValue(key));
 				}
 				value = StringUtils.join(mulitValue, ",");
 			} else {
 				value = value.substring(spiltStart + 1, endStart);
 				value = String.valueOf(viasProperties.getProperty(value));
+				if(value.contains("$")){
+					//直到找到具体的值
+					value = getReplaceValue(value);
+				}
 			}
 		}
 		if("null".equals(value) || StringUtils.isBlank(value)){
