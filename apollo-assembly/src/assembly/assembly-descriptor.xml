@@ -40,7 +40,6 @@
 		<fileSet>
 			<directory>${project.basedir}/src/main/resources</directory>
 			<includes>
-				<include>*.properties</include>
 				<include>*.yml</include>
 				<include>*.yaml</include>
 				<include>*.xml</include>

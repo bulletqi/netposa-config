@@ -15,7 +15,7 @@ readonly PID_FILE="$LOGS_HOME/application.pid"
 readonly APP_MAIN_CLASS="npwonder-centerconf.jar"
 readonly LOG_CONFIG="$CONFIG_HOME/logback-spring.xml"
 
-readonly JAVA_RUN="-Dh2.configdb.fileLocaltion=$APOLLO_DB -Dlogs.home=$LOGS_HOME -Dlogging.config=$LOG_CONFIG -Dspring.config.location=file:$CONFIG_HOME -Dspring.pid.file=$PID_FILE -Dspring.pid.fail-on-write-error=true"
+readonly JAVA_RUN="-Dh2.configdb.fileLocaltion=$APOLLO_DB -Dapollo.config.home=$APP_HOME -Dlogs.home=$LOGS_HOME -Dlogging.config=$LOG_CONFIG -Dspring.config.location=file:$CONFIG_HOME -Dspring.pid.file=$PID_FILE -Dspring.pid.fail-on-write-error=true"
 readonly JAVA_OPTS="-server -Xms1024m -Xmx1024m -XX:PermSize=128M -XX:MaxPermSize=256M $JAVA_RUN"
 
 readonly JAVA="$JAVA_HOME/bin/java"
